@@ -16,7 +16,6 @@ public class Songs extends ArrayList<Song> {
     public Songs(String titel) throws RepositoryException, MalformedQueryException, QueryEvaluationException {
 
 
-        // Load list of scientists from DBpedia
         HTTPRepository httpRepository = new HTTPRepository("http://data.linkedmdb.org/sparql");
         httpRepository.initialize();
 

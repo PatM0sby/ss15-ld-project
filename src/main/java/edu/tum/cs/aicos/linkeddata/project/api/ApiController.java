@@ -9,6 +9,7 @@ import org.openrdf.repository.http.HTTPRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.math.BigInteger;
 
@@ -19,7 +20,7 @@ public class ApiController {
     Logger logger = LoggerFactory.getLogger(ApiController.class);
 
     @RequestMapping(value = "/songs")
-    public Songs loadSongs(@RequestParam(value="titel", defaultValue="") String titel) throws RepositoryException, MalformedQueryException, QueryEvaluationException {
+    public Songs loadSongs(@RequestParam(value="titel", defaultValue="0") String titel) throws RepositoryException, MalformedQueryException, QueryEvaluationException {
         return new Songs(titel);
     }
 

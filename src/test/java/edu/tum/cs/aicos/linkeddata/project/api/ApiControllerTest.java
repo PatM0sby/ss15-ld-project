@@ -35,11 +35,10 @@ public class ApiControllerTest {
         logger.debug("testHello begin");
 
         RestTemplate browser1 = new TestRestTemplate();
-        ResponseEntity<Cities> responseEntity = browser1.getForEntity(
-                "http://127.0.0.1:" + port + "/api/cities", Cities.class);
+        ResponseEntity<Movies> responseEntity = browser1.getForEntity(
+                "http://127.0.0.1:" + port + "/api/cities", Movies.class);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        List<City> data = responseEntity.getBody();
-        assertEquals("München", data.get(1).getLabel());
+        List<Movie> data = responseEntity.getBody();
         assertEquals(20, data.size());
 
         logger.debug("testHello end");

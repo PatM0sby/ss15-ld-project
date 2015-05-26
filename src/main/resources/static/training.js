@@ -33,7 +33,7 @@ training.controller('TrainingController', function ($scope, $http) {
     $scope.reloadSongs = function () {
         var parameter2 =  document.getElementById('input2').value;
 
-        $http.get('/api/songs?titel='+parameter).success(function (data) {
+        $http.get('/api/songs?titel='+parameter2).success(function (data) {
             $scope.songs = data;
         }).error(function (data, status) {
             window.alert('Status ' + status + ': ' + data.message);
@@ -52,7 +52,7 @@ training.controller('TrainingController', function ($scope, $http) {
     $scope.reloadActors = function () {
         var parameter3 =  document.getElementById('input3').value;
 
-        $http.get('/api/actors?film='+parameter).success(function (data) {
+        $http.get('/api/actors?film='+parameter3).success(function (data) {
             $scope.actors = data;
         }).error(function (data, status) {
             window.alert('Status ' + status + ': ' + data.message);
