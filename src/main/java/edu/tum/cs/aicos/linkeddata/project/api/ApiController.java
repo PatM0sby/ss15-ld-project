@@ -19,12 +19,12 @@ public class ApiController {
 
     Logger logger = LoggerFactory.getLogger(ApiController.class);
 
-    @RequestMapping(value = "/cities")
+    @RequestMapping(value = "/movie")
     public Cities loadGermanCities() throws RepositoryException, MalformedQueryException, QueryEvaluationException {
         logger.debug("Loading list of german cities from DBpedia...");
 
         // Load list of scientists from DBpedia
-        HTTPRepository httpRepository = new HTTPRepository("http://dbpedia.org/sparql");
+        HTTPRepository httpRepository = new HTTPRepository("http://data.linkedmdb.org/sparql");
         httpRepository.initialize();
 
         RepositoryConnection repositoryConnection = httpRepository.getConnection();
@@ -78,5 +78,19 @@ public class ApiController {
         return cities;
     }
 
+    @RequestMapping(value = "/songs")
+    public Songs loadSongs(@RequestParam(value="titel", defaultValue="0") String titel) throws RepositoryException, MalformedQueryException, QueryEvaluationException {
+        return new Songs(titel);
+    }
+
+    @RequestMapping(value = "/movies")
+    public Movies loadMovies(@RequestParam(value="year", defaultValue="0") String year) throws RepositoryException, MalformedQueryException, QueryEvaluationException {
+        return new Movies(year);
+    }
+
+    @RequestMapping(value = "/actors")
+    public Actors loadActors(@RequestParam(value="film", defaultValue="0") String film) throws RepositoryException, MalformedQueryException, QueryEvaluationException {
+        return new Actors(film);
+    }
 }
 

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>title</title>
+    <title>DBPedia: Countries by population</title>
     <script src="webjars/angularjs/1.3.11/angular.js"></script>
     <script src="webjars/jquery/2.1.3/jquery.js"></script>
     <script src="webjars/bootstrap/3.1.1/js/bootstrap.js"></script>
@@ -20,20 +20,56 @@
     <div class="jumbotron">
         <h1>Bachelor-Praktikum Linked Data</h1>
 
-        <p>Example Query: German Cities (DBpedia)</p>
+        <p>LMDB Projekt</p>
     </div>
+
+    Enter Filmtitel: <input type="text" name="input" id="input1" value="" />
+    <button ng-click="reloadMovies()" id="button1">Search</button>
 
     <table class="table table-hover">
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Population</th>
+            <th>Jahr</th>
+
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="city in cities">
-            <td><a href="{{city.uri}}" target="_blank">{{city.label}}</a></td>
-            <td>{{city.population}}</td>
+        <tr ng-repeat="movie in movies">
+            <td>{{movie.year}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    Enter Songtitel: <input type="text" name="input" id="input2" value="" />
+    <button ng-click="reloadSongs()" id="button2">Search</button>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Filmtitel</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="song in songs">
+            <td>{{song.titel}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    Enter Schauspieler: <input type="text" name="input" id="input3" value="" />
+    <button ng-click="reloadActors()" id="button3">Search</button>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Film</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="actor in actors">
+            <td>{{actor.film}}</td>
         </tr>
         </tbody>
     </table>
