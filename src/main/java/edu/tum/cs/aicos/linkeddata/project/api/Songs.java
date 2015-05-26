@@ -25,11 +25,17 @@ public class Songs extends ArrayList<Song> {
         TupleQuery tupleQuery = repositoryConnection.prepareTupleQuery(QueryLanguage.SPARQL,
 
 
-        /*
-
-        Fancy Sparql Anfrage
-
-         */
+                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+                        "PREFIX dc: <http://purl.org/dc/terms/>\n" +
+                        "PREFIX movie: <http://data.linkedmdb.org/resource/movie/>\n" +
+                        "\n" +
+                        "Select ?uri ?titel ?runtime ?publicationDate ?genre\n" +
+                        "WHERE {\n" +
+                        "?uri movie:runtime ?publicationDate.\n" +
+                        "FILTER(?titel >=" + titel + ")\n " +
+                        "\n" +
+                        "}\n" +
+                        "LIMIT 1"
 
 
         );

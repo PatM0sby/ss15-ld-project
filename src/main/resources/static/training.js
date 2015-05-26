@@ -12,9 +12,9 @@ training.controller('TrainingController', function ($scope, $http) {
     $scope.getMovies();
 
     $scope.reloadMovies = function () {
-        var parameter =  document.getElementById('input1').value;
+        var parameter1 =  document.getElementById('input1').value;
 
-        $http.get('/api/movies?titel='+parameter).success(function (data) {
+        $http.get('/api/movies?year='+parameter).success(function (data) {
             $scope.movies = data;
         }).error(function (data, status) {
             window.alert('Status ' + status + ': ' + data.message);
@@ -31,7 +31,7 @@ training.controller('TrainingController', function ($scope, $http) {
     $scope.getSongs();
 
     $scope.reloadSongs = function () {
-        var parameter =  document.getElementById('input2').value;
+        var parameter2 =  document.getElementById('input2').value;
 
         $http.get('/api/songs?titel='+parameter).success(function (data) {
             $scope.songs = data;
@@ -50,9 +50,9 @@ training.controller('TrainingController', function ($scope, $http) {
     $scope.getActors();
 
     $scope.reloadActors = function () {
-        var parameter =  document.getElementById('input3').value;
+        var parameter3 =  document.getElementById('input3').value;
 
-        $http.get('/api/actors?name='+parameter).success(function (data) {
+        $http.get('/api/actors?film='+parameter).success(function (data) {
             $scope.actors = data;
         }).error(function (data, status) {
             window.alert('Status ' + status + ': ' + data.message);

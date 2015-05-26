@@ -25,11 +25,17 @@ public class Actors extends ArrayList<Actor> {
         TupleQuery tupleQuery = repositoryConnection.prepareTupleQuery(QueryLanguage.SPARQL,
 
 
-        /*
-
-        Fancy Sparql Anfrage
-
-         */
+                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+                        "PREFIX dc: <http://purl.org/dc/terms/>\n" +
+                        "PREFIX movie: <http://data.linkedmdb.org/resource/movie/>\n" +
+                        "\n" +
+                        "Select ?uri ?title ?runtime ?publicationDate ?genre\n" +
+                        "WHERE {\n" +
+                        "?uri movie:runtime ?publicationDate.\n" +
+                        "FILTER(?title =" + film + ")\n " +
+                        "\n" +
+                        "}\n" +
+                        "LIMIT 1"
 
 
         );
@@ -44,7 +50,7 @@ public class Actors extends ArrayList<Actor> {
             Binding actorfilmBinding = bindingSet.getBinding("film");
             Literal actorfilmLiteral = (Literal) actorfilmBinding.getValue();
             String actorfilmString = actorfilmLiteral.stringValue();
-            movie.setFilm(actorfilmString);
+            actor.setFilm(actorfilmString);
 
             this.add(actor);
         }
