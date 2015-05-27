@@ -31,17 +31,42 @@ public class ApiControllerTest {
     protected int port;
 
     @Test
-    public void testCities() throws Exception {
-        logger.debug("testHello begin");
-
+    public void testMovie() throws Exception {
+        logger.debug("testMovie begin");
         RestTemplate browser1 = new TestRestTemplate();
         ResponseEntity<Movies> responseEntity = browser1.getForEntity(
-                "http://127.0.0.1:" + port + "/api/cities", Movies.class);
+                "http://127.0.0.1:" + port + "/api/movies", Movies.class);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         List<Movie> data = responseEntity.getBody();
-        assertEquals(20, data.size());
+        assertEquals(1, data.size());
 
-        logger.debug("testHello end");
+        logger.debug("testMovie end");
+    }
+
+    @Test
+    public void testActor() throws Exception {
+        logger.debug("testActor begin");
+        RestTemplate browser1 = new TestRestTemplate();
+        ResponseEntity<Actors> responseEntity = browser1.getForEntity(
+                "http://127.0.0.1:" + port + "/api/actors", Actors.class);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        List<Actor> data = responseEntity.getBody();
+        assertEquals(1, data.size());
+
+        logger.debug("testActor end");
+    }
+
+    @Test
+    public void testSong() throws Exception {
+        logger.debug("testSong begin");
+        RestTemplate browser1 = new TestRestTemplate();
+        ResponseEntity<Songs> responseEntity = browser1.getForEntity(
+                "http://127.0.0.1:" + port + "/api/songs", Songs.class);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        List<Song> data = responseEntity.getBody();
+        assertEquals(1, data.size());
+
+        logger.debug("testSong end");
     }
 
 }
