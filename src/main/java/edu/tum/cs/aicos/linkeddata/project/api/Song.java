@@ -28,7 +28,7 @@ public class Song {
 
     public String getInterpretName() { return interpretName;}
 
-    public void setInterpretName(String publicationDate) {this.interpretName = interpretName;}
+    public void setInterpretName(String interpretName) {this.interpretName = interpretName;}
 
     public Movies getMovies() {
         return movies;

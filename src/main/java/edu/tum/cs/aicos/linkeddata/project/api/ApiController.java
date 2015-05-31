@@ -1,20 +1,19 @@
 package edu.tum.cs.aicos.linkeddata.project.api;
 
-import org.openrdf.model.Literal;
-import org.openrdf.model.URI;
-import org.openrdf.query.*;
-import org.openrdf.repository.RepositoryConnection;
+import com.hp.hpl.jena.query.* ;
+import com.hp.hpl.jena.rdf.model.Literal;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.Resource;
+
+import org.openrdf.query.MalformedQueryException;
+import org.openrdf.query.QueryEvaluationException;
 import org.openrdf.repository.RepositoryException;
-import org.openrdf.repository.http.HTTPRepository;
-import org.openrdf.query.resultio.TupleQueryResultFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.io.PrintWriter;
-import java.math.BigInteger;
 
 @RestController
 @RequestMapping("/api/")
@@ -23,73 +22,49 @@ public class ApiController {
     Logger logger = LoggerFactory.getLogger(ApiController.class);
 
     @RequestMapping(value = "/movie")
-    public Movie LoadMovie(@RequestParam(value="titel", defaultValue="Man of La Mancha")String titel) throws RepositoryException, MalformedQueryException, QueryEvaluationException {
+    public Movie LoadMovie(@RequestParam(value = "titel", defaultValue = "Man of La Mancha") String titel) {
         logger.debug("Loading movie from Linkedmdb...");
 
-        HTTPRepository httpRepository = new HTTPRepository("http://data.linkedmdb.org/sparql");
-        httpRepository.initialize();
-        //httpRepository.setPreferredTupleQueryResultFormat(TupleQueryResultFormat.JSON);
+        String model = "http://data.linkedmdb.org/sparql";
 
-        RepositoryConnection repositoryConnection = httpRepository.getConnection();
+        String queryString =
+                        "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+                        "PREFIX dc: <http://purl.org/dc/terms/>\n" +
+                        "PREFIX movie: <http://data.linkedmdb.org/resource/movie/>\n" +
+                        "\n" +
+                        "SELECT ?uri ?name ?runtime ?publicationDate ?genre\n" +
+                        "WHERE {\n" +
+                        "?uri rdfs:label \""+titel+"\".\n" +
+                        "?uri rdfs:label ?name.\n" +
+                        "?uri dc:date ?publicationDate.\n" +
+                        "Optional {?uri movie:genre ?linkgenre.\n" +
+                        "?linkgenre movie:film_genre_name ?genre.}\n" +
+                        "?uri movie:runtime ?runtime.\n" +
+                        "}\n" +
+                        "LIMIT 1";
+        ;
 
-        String query =
-                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
-                "PREFIX dc: <http://purl.org/dc/terms/>\n" +
-                "PREFIX movie: <http://data.linkedmdb.org/resource/movie/>\n" +
-                "\n" +
-                "SELECT ?uri ?name ?runtime ?publicationDate ?genre\n" +
-                "WHERE {\n" +
-                "?uri rdfs:label \""+titel+"\".\n" +
-                "?uri rdfs:label ?name.\n" +
-                "?uri dc:date ?runtime.\n" +
-                "Optional {?uri movie:genre ?linkgenre.\n" +
-                "?linkgenre movie:film_genre_name ?genre.}\n" +
-                "?uri movie:runtime ?publicationDate.\n" +
-                "}\n" +
-                "LIMIT 1";
-                //System.out.println(query);
+        Movie movie = new Movie();
 
-            TupleQuery tupleQuery = repositoryConnection.prepareTupleQuery(QueryLanguage.SPARQL,query);
+        try (QueryExecution qexec = QueryExecutionFactory.sparqlService(model,queryString)) {
+            ResultSet results = qexec.execSelect();
+            for (; results.hasNext(); ) {
+                QuerySolution soln = results.nextSolution();
 
-            Movie movie = new Movie();
-
-
-            TupleQueryResult tupleQueryResult = tupleQuery.evaluate();
-
-            BindingSet bindingSet = tupleQueryResult.next();
-
-            Binding uriBinding = bindingSet.getBinding("uri");
-            URI uri = (URI) uriBinding.getValue();
-            movie.setUri(uri.stringValue());
-
-            Binding labelBinding = bindingSet.getBinding("name");
-            Literal labelLiteral = (Literal) labelBinding.getValue();
-            String labelString = labelLiteral.stringValue();
-            movie.setLabel(labelString);
-
-            Binding publicationBinding = bindingSet.getBinding("publicationDate");
-            Literal publicationLiteral = (Literal) publicationBinding.getValue();
-            String publicationString = publicationLiteral.stringValue();
-            movie.setPublicationDate(publicationString);
-
-            Binding genreBinding = bindingSet.getBinding("genre");
-            Literal genreLiteral = (Literal) genreBinding.getValue();
-            String genreString = genreLiteral.stringValue();
-            movie.setGenre(genreString);
-
-            Binding runtimeBinding = bindingSet.getBinding("runtime");
-            Literal runtimeLiteral = (Literal) runtimeBinding.getValue();
-            BigInteger populationBigInteger = runtimeLiteral.integerValue();
-            int runtimeInt = populationBigInteger.intValue();
-            movie.setRuntime(runtimeInt);
-
-        tupleQueryResult.close();
-
-        repositoryConnection.close();
-
-        httpRepository.shutDown();
-
-        logger.debug("Loaded movie from LinkedMDB.");
+                //RDFNode x = soln.get("varName");       // Get a result variable by name.
+                //Resource r = soln.getResource("VarR"); // Get a result variable - must be a resource
+                Literal l = soln.getLiteral("name");   // Get a result variable - must be a literal
+                movie.setLabel(l.getLexicalForm());
+                Resource x = soln.getResource("uri");   // Get a result variable - must be a literal
+                movie.setUri(x.getURI());
+                Literal a = soln.getLiteral("publicationDate");   // Get a result variable - must be a literal
+                movie.setPublicationDate(a.getString());
+                //Literal b = soln.getLiteral("genre");   // Get a result variable - must be a literal
+                //movie.setGenre(b.getString());
+                Literal c = soln.getLiteral("runtime");   // Get a result variable - must be a literal
+                movie.setRuntime(c.getString());
+            }
+        }
 
         return movie;
     }
@@ -98,67 +73,38 @@ public class ApiController {
     public Actor LoadActor(@RequestParam(value="name", defaultValue="Peter O'Toole")String name) throws RepositoryException, MalformedQueryException, QueryEvaluationException {
         logger.debug("Loading actor from Linkedmdb...");
 
-        HTTPRepository httpRepository = new HTTPRepository("http://data.linkedmdb.org/sparql");
-        httpRepository.initialize();
+        String model = "http://data.linkedmdb.org/sparql";
 
-        RepositoryConnection repositoryConnection = httpRepository.getConnection();
+        String queryString =
+                        "PREFIX dc: <http://purl.org/dc/terms/>\n" +
+                        "PREFIX movie: <http://data.linkedmdb.org/resource/movie/>\n" +
+                        "\n" +
+                        "Select ?actor ?actorname ?moviename\n" +
+                        "WHERE {\n" +
+                        "?actor movie:actor_name \""+name+"\".\n" +
+                        "?actor movie:actor_name ?actorname.\n" +
+                        "?movie movie:actor ?actor.\n" +
+                        "?movie dc:title ?moviename.\n" +
+                        "}"
+        ;
 
-        TupleQuery tupleQuery = repositoryConnection.prepareTupleQuery(QueryLanguage.SPARQL,
-
-                "PREFIX dc: <http://purl.org/dc/terms/>\n" +
-                "PREFIX movie: <http://data.linkedmdb.org/resource/movie/>\n" +
-                "\n" +
-                "Select ?actor ?actorname ?moviename\n" +
-                "WHERE {\n" +
-                "?actor movie:actor_name \""+name+"\".\n" +
-                "?actor movie:actor_name ?actorname.\n" +
-                "?movie movie:actor ?actor.\n" +
-                "?movie dc:title ?moviename.\n" +
-                "}"
-        );
-
-
-        TupleQueryResult tupleQueryResult = tupleQuery.evaluate();
-
-        Movies movies=new Movies();
         Actor actor = new Actor();
+        Movies movies = new Movies();
 
-        if (tupleQueryResult.hasNext()) {
-            BindingSet bindingSet = tupleQueryResult.next();
+        try (QueryExecution qexec = QueryExecutionFactory.sparqlService(model,queryString)) {
+            ResultSet results = qexec.execSelect();
+            for (; results.hasNext(); ) {
+                QuerySolution soln = results.nextSolution();
 
-            Binding actorBinding = bindingSet.getBinding("actor");
-            URI uri = (URI) actorBinding.getValue();
-            actor.setUri(uri.stringValue());
-
-            Binding actornameBinding = bindingSet.getBinding("actorname");
-            Literal actornameLiteral = (Literal) actornameBinding.getValue();
-            String actornameString = actornameLiteral.stringValue();
-            actor.setLabel(actornameString);
-
-            Binding movieBinding = bindingSet.getBinding("moviename");
-            Literal movieLiteral = (Literal) movieBinding.getValue();
-            String movieString = movieLiteral.stringValue();
-            movies.add(LoadMovie(movieString));
+                Literal l = soln.getLiteral("actorname");   // Get a result variable - must be a literal
+                actor.setLabel(l.getLexicalForm());
+                Resource x = soln.getResource("actor");   // Get a result variable - must be a literal
+                actor.setUri(x.getURI());
+                Literal a = soln.getLiteral("moviename");   // Get a result variable - must be a literal
+                movies.add(LoadMovie(a.getString()));
+            }
         }
-
-        while (tupleQueryResult.hasNext()) {
-            BindingSet bindingSet = tupleQueryResult.next();
-
-            Binding movieBinding = bindingSet.getBinding("moviename");
-            Literal movieLiteral = (Literal) movieBinding.getValue();
-            String movieString = movieLiteral.stringValue();
-            movies.add(LoadMovie(movieString));
-        }
-
         actor.setMovies(movies);
-
-        tupleQueryResult.close();
-
-        repositoryConnection.close();
-
-        httpRepository.shutDown();
-
-        logger.debug("Loaded actor from LinkedMDB.");
 
         return actor;
     }
@@ -166,14 +112,9 @@ public class ApiController {
     @RequestMapping(value = "/song")
     public Song LoadSong(@RequestParam(value="name", defaultValue="Nobody Does It Better")String name) throws RepositoryException, MalformedQueryException, QueryEvaluationException {
         logger.debug("Loading song from Linkedmdb...");
+        String model = "http://data.linkedmdb.org/sparql";
 
-        HTTPRepository httpRepository = new HTTPRepository("http://data.linkedmdb.org/sparql");
-        httpRepository.initialize();
-
-        RepositoryConnection repositoryConnection = httpRepository.getConnection();
-
-        TupleQuery tupleQuery = repositoryConnection.prepareTupleQuery(QueryLanguage.SPARQL,
-
+        String queryString =
                         "PREFIX dc: <http://purl.org/dc/terms/>\n" +
                         "PREFIX movie: <http://data.linkedmdb.org/resource/movie/>\n" +
                         "\n" +
@@ -185,58 +126,29 @@ public class ApiController {
                         "?movie movie:film_featured_song ?song.\n" +
                         "?movie dc:title ?moviename.\n" +
                         "}"
-        );
+                ;
 
-
-        TupleQueryResult tupleQueryResult = tupleQuery.evaluate();
-
-        Movies movies=new Movies();
         Song song = new Song();
+        Movies movies = new Movies();
 
-        if (tupleQueryResult.hasNext()) {
-            BindingSet bindingSet = tupleQueryResult.next();
+        try (QueryExecution qexec = QueryExecutionFactory.sparqlService(model, queryString)) {
+            ResultSet results = qexec.execSelect();
+            for (; results.hasNext(); ) {
+                QuerySolution soln = results.nextSolution();
 
-            Binding songBinding = bindingSet.getBinding("song");
-            URI uri = (URI) songBinding.getValue();
-            song.setUri(uri.stringValue());
-
-            Binding songnameBinding = bindingSet.getBinding("songname");
-            Literal songnameLiteral = (Literal) songnameBinding.getValue();
-            String songnameString = songnameLiteral.stringValue();
-            song.setLabel(songnameString);
-
-            Binding interpretnameBinding = bindingSet.getBinding("interpretname");
-            Literal interpretnameLiteral = (Literal) interpretnameBinding.getValue();
-            String interpretnameString = interpretnameLiteral.stringValue();
-            song.setInterpretName(interpretnameString);
-
-            Binding movieBinding = bindingSet.getBinding("moviename");
-            Literal movieLiteral = (Literal) movieBinding.getValue();
-            String movieString = movieLiteral.stringValue();
-            movies.add(LoadMovie(movieString));
+                Literal l = soln.getLiteral("songname");   // Get a result variable - must be a literal
+                song.setLabel(l.getLexicalForm());
+                Literal j = soln.getLiteral("interpretname");   // Get a result variable - must be a literal
+                song.setInterpretName(j.getLexicalForm());
+                Resource x = soln.getResource("song");   // Get a result variable - must be a literal
+                song.setUri(x.getURI());
+                Literal a = soln.getLiteral("moviename");   // Get a result variable - must be a literal
+                movies.add(LoadMovie(a.getString()));
+            }
         }
-
-        while (tupleQueryResult.hasNext()) {
-            BindingSet bindingSet = tupleQueryResult.next();
-
-            Binding movieBinding = bindingSet.getBinding("moviename");
-            Literal movieLiteral = (Literal) movieBinding.getValue();
-            String movieString = movieLiteral.stringValue();
-            movies.add(LoadMovie(movieString));
-        }
-
         song.setMovies(movies);
-
-        tupleQueryResult.close();
-
-        repositoryConnection.close();
-
-        httpRepository.shutDown();
-
-        logger.debug("Loaded song from LinkedMDB.");
 
         return song;
     }
-
 }
 

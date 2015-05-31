@@ -5,7 +5,7 @@ public class Movie {
 
     private String label;
 
-    private int runtime;
+    private String runtime;
 
     private String publicationDate; // yyyy-mm-dd
 
@@ -27,11 +27,11 @@ public class Movie {
         this.label = label;
     }
 
-    public int getRuntime() {
+    public String getRuntime() {
         return runtime;
     }
 
-    public void setRuntime(int runtime) {
+    public void setRuntime(String runtime) {
         this.runtime = runtime;
     }
 
