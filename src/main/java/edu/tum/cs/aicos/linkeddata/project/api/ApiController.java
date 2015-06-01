@@ -6,9 +6,6 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 
-import org.openrdf.query.MalformedQueryException;
-import org.openrdf.query.QueryEvaluationException;
-import org.openrdf.repository.RepositoryException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,7 +67,7 @@ public class ApiController {
     }
 
     @RequestMapping(value = "/actor")
-    public Actor LoadActor(@RequestParam(value="name", defaultValue="Peter O'Toole")String name) throws RepositoryException, MalformedQueryException, QueryEvaluationException {
+    public Actor LoadActor(@RequestParam(value="name", defaultValue="Peter O'Toole")String name)  {
         logger.debug("Loading actor from Linkedmdb...");
 
         String model = "http://data.linkedmdb.org/sparql";
@@ -110,7 +107,7 @@ public class ApiController {
     }
 
     @RequestMapping(value = "/song")
-    public Song LoadSong(@RequestParam(value="name", defaultValue="Nobody Does It Better")String name) throws RepositoryException, MalformedQueryException, QueryEvaluationException {
+    public Song LoadSong(@RequestParam(value="name", defaultValue="Nobody Does It Better")String name) {
         logger.debug("Loading song from Linkedmdb...");
         String model = "http://data.linkedmdb.org/sparql";
 
