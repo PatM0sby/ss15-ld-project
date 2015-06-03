@@ -52,15 +52,18 @@ public class HtmlUnitCrawler {
             //*[@id="area-titles"]/div[2]/a[1]/a
             //*[@id="area-titles"]/div[2]/a[5]
             //String pagesource=page.asText();
-
-            return answer;
+            //{"uri":"http://data.linkedmdb.org/resource/film_featured_song/15"
+            String result="{\"entries\":\""+answer+"\"}";
+                    System.out.println(result);
+            return result;
+            //return answer;
         } catch (IOException e) {
             e.printStackTrace();
         }
 
 
 
-        return "fail";}
+        return "failed @HTMLUnitCrawler";}
 
     public static void main(String[] args) throws InterruptedException {
         String answer;
