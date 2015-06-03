@@ -70,11 +70,11 @@ training.controller('TrainingController', function ($scope, $http) {
             window.alert('Status ' + status + ': ' + data.message);
         });*/
         $scope.latestMovies="Loading latest movies...";
-        $http.get('/api/latest').success(function (data){alert("JSworked")}).error(function (data){alert("JSfail")});
-        $scope.latestMovies="MOVIE";
+        //$http.get('/api/latest').success(function (data){alert("JSworked")}).error(function (data){alert("JSfail")});
+
 
 
 
     };
-    //$scope.loadLatestMovies();
+    $scope.loadLatestMovies();
 });

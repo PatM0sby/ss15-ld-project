@@ -40,19 +40,20 @@ public class HtmlUnitCrawler {
             //DomElement element = page.getFirstByXPath("//*[@id=\"area-titles\"]/div[2]/a[1]");
             //*[@id="area-titles"]/div[2]/a[2]/a
             int i=1;
+            String answer="";
             while(i<=5) {
                 HtmlAnchor element = page.getFirstByXPath("//*[@id=\"area-titles\"]/div[2]/a["+i+"]");
                 final String text = element.asText();
-
-                System.out.println(text);
+                answer=answer+text+", ";
+                //System.out.println(text);
                 i=i+1;
 
             }
             //*[@id="area-titles"]/div[2]/a[1]/a
             //*[@id="area-titles"]/div[2]/a[5]
-            String pagesource=page.asText();
+            //String pagesource=page.asText();
 
-            return pagesource;
+            return answer;
         } catch (IOException e) {
             e.printStackTrace();
         }
