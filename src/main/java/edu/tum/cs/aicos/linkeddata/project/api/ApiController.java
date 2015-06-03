@@ -25,13 +25,13 @@ public class ApiController {
         String model = "http://data.linkedmdb.org/sparql";
 
         String queryString =
-                        "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
                         "PREFIX dc: <http://purl.org/dc/terms/>\n" +
                         "PREFIX movie: <http://data.linkedmdb.org/resource/movie/>\n" +
                         "\n" +
                         "SELECT ?uri ?name ?runtime ?publicationDate ?genre\n" +
                         "WHERE {\n" +
-                        "?uri rdfs:label \""+titel+"\".\n" +
+                        "?uri rdfs:label \"" + titel + "\".\n" +
                         "?uri rdfs:label ?name.\n" +
                         "?uri dc:date ?publicationDate.\n" +
                         "Optional {?uri movie:genre ?linkgenre.\n" +
@@ -43,7 +43,7 @@ public class ApiController {
 
         Movie movie = new Movie();
 
-        try (QueryExecution qexec = QueryExecutionFactory.sparqlService(model,queryString)) {
+        try (QueryExecution qexec = QueryExecutionFactory.sparqlService(model, queryString)) {
             ResultSet results = qexec.execSelect();
             for (; results.hasNext(); ) {
                 QuerySolution soln = results.nextSolution();
@@ -67,28 +67,27 @@ public class ApiController {
     }
 
     @RequestMapping(value = "/actor")
-    public Actor LoadActor(@RequestParam(value="name", defaultValue="Peter O'Toole")String name)  {
+    public Actor LoadActor(@RequestParam(value = "name", defaultValue = "Peter O'Toole") String name) {
         logger.debug("Loading actor from Linkedmdb...");
 
         String model = "http://data.linkedmdb.org/sparql";
 
         String queryString =
-                        "PREFIX dc: <http://purl.org/dc/terms/>\n" +
+                "PREFIX dc: <http://purl.org/dc/terms/>\n" +
                         "PREFIX movie: <http://data.linkedmdb.org/resource/movie/>\n" +
                         "\n" +
                         "Select ?actor ?actorname ?moviename\n" +
                         "WHERE {\n" +
-                        "?actor movie:actor_name \""+name+"\".\n" +
+                        "?actor movie:actor_name \"" + name + "\".\n" +
                         "?actor movie:actor_name ?actorname.\n" +
                         "?movie movie:actor ?actor.\n" +
                         "?movie dc:title ?moviename.\n" +
-                        "}"
-        ;
+                        "}";
 
         Actor actor = new Actor();
         Movies movies = new Movies();
 
-        try (QueryExecution qexec = QueryExecutionFactory.sparqlService(model,queryString)) {
+        try (QueryExecution qexec = QueryExecutionFactory.sparqlService(model, queryString)) {
             ResultSet results = qexec.execSelect();
             for (; results.hasNext(); ) {
                 QuerySolution soln = results.nextSolution();
@@ -107,23 +106,22 @@ public class ApiController {
     }
 
     @RequestMapping(value = "/song")
-    public Song LoadSong(@RequestParam(value="name", defaultValue="Nobody Does It Better")String name) {
+    public Song LoadSong(@RequestParam(value = "name", defaultValue = "Nobody Does It Better") String name) {
         logger.debug("Loading song from Linkedmdb...");
         String model = "http://data.linkedmdb.org/sparql";
 
         String queryString =
-                        "PREFIX dc: <http://purl.org/dc/terms/>\n" +
+                "PREFIX dc: <http://purl.org/dc/terms/>\n" +
                         "PREFIX movie: <http://data.linkedmdb.org/resource/movie/>\n" +
                         "\n" +
                         "Select ?song ?songname ?moviename ?interpretname\n" +
                         "WHERE {\n" +
-                        "?song movie:film_featured_song_name \""+name+"\".\n" +
+                        "?song movie:film_featured_song_name \"" + name + "\".\n" +
                         "?song movie:film_featured_song_name ?songname.\n" +
                         "?song movie:film_featured_song_performed_by ?interpretname.\n" +
                         "?movie movie:film_featured_song ?song.\n" +
                         "?movie dc:title ?moviename.\n" +
-                        "}"
-                ;
+                        "}";
 
         Song song = new Song();
         Movies movies = new Movies();
@@ -147,5 +145,17 @@ public class ApiController {
 
         return song;
     }
-}
 
+    @RequestMapping(value = "/latest")
+    public String LoadLatestMovies() {
+        Webcrawler crawler = new Webcrawler();
+        try {
+            return crawler.getLatestMovies();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return "APIFehler";
+
+        }
+
+    }
+}
