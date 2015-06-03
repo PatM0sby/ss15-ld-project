@@ -146,9 +146,21 @@ public class ApiController {
         return song;
     }
 
+    @RequestMapping(value = "/latestSelenium")
+    public String LoadLatestMoviesSelenium() {
+        Webcrawler crawler = new Webcrawler();
+        try {
+            return crawler.getLatestMovies();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return "APIFehler";
+
+        }
+
+    }
     @RequestMapping(value = "/latest")
     public String LoadLatestMovies() {
-        Webcrawler crawler = new Webcrawler();
+        HtmlUnitCrawler crawler=new HtmlUnitCrawler();
         try {
             return crawler.getLatestMovies();
         } catch (InterruptedException e) {
