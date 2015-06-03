@@ -37,59 +37,98 @@
     <br>
     <br>
 
-    Enter Filmtitel: <input type="text" name="input" id="input1" value="" />
-    <button ng-click="reloadMovies()" id="button1">Search</button>
 
-    <table class="table table-hover">
+    Suche: <input type="text" name="input" id="eingabe" size="50" placeholder="Movies, Songs, Actors.." oninput="myFunction()" list="vorschlag" autocomplete="on"/>
+    <datalist id="vorschlag">
+        <option value="Johnny Depp">
+    </datalist>
+    <!-- <button ng-click="reloadAll()" id="button">Search</button> -->
+
+    <table class="table table-hover" id="tableMovies">
         <thead>
         <tr>
-            <th>Jahr</th>
+            <th>uri</th>
+            <th>Label</th>
+            <th>Runtime</th>
+            <th>Publicationdate</th>
+            <th>Genre</th>
 
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="movie in movies">
-            <td>{{movie.year}}</td>
+            <td>{{movie.uri}}</td>
+            <td>{{movie.label}}</td>
+            <td>{{movie.runtime}}</td>
+            <td>{{movie.publicationDate}}</td>
+            <td>{{movie.genre}}</td>
         </tr>
         </tbody>
     </table>
 
-    Enter Songtitel: <input type="text" name="input" id="input2" value="" />
-    <button ng-click="reloadSongs()" id="button2">Search</button>
-
-    <table class="table table-hover">
+    <table class="table table-hover" id="tableSongs">
         <thead>
         <tr>
-            <th>Filmtitel</th>
+            <th>uri</th>
+            <th>Label</th>
+            <th>Interpretname</th>
+            <th>movies</th>
 
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="song in songs">
-            <td>{{song.titel}}</td>
+            <td>{{song.uri}}</td>
+            <td>{{song.label}}</td>
+            <td>{{song.interpretName}}</td>
+            <td>{{song.movies}}</td>
         </tr>
         </tbody>
     </table>
 
-    Enter Schauspieler: <input type="text" name="input" id="input3" value="" />
-    <button ng-click="reloadActors()" id="button3">Search</button>
-
-    <table class="table table-hover">
+    <table class="table table-hover" id="tableActors">
         <thead>
         <tr>
-            <th>Film</th>
+            <th>uri</th>
+            <th>Label</th>
+            <th>Movies</th>
 
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="actor in actors">
-            <td>{{actor.film}}</td>
+            <td>{{actor.uri}}</td>
+            <td>{{actor.label}}</td>
+            <td>{{actor.movies}}</td>
         </tr>
         </tbody>
     </table>
 
-
 </div>
+
+<script>
+    function myFunction() {
+        //reloadMovies();
+        //reloadActors();
+        //reloadSongs();
+        var hugo = document.getElementById('eingabe');
+        alert('Die Eingabe: '+hugo.value);
+    }
+
+    /*
+     var availableTags = ["Johnny Depp"];
+
+     $(function(){
+     $('#autocomplete-default').autocomplete({
+     source : availableTags
+     });
+     });
+     */
+
+    document.getElementById("tableMovies").style.display = "none";
+    document.getElementById("tableSongs").style.display = "none";
+    document.getElementById("tableActors").style.display = "none";
+</script>
 
 </body>
 </html>
