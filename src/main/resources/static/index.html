@@ -38,9 +38,10 @@
     <br>
 
 
-    Suche: <input type="text" name="input" id="eingabe" size="50" placeholder="Movies, Songs, Actors.." oninput="myFunction()" list="vorschlag" autocomplete="on"/>
+    Suche: <input type="text" name="input" id="eingabe" size="50" placeholder="Movies, Songs, Actors.." oninput="reloadMovies()" list="vorschlag" autocomplete="on"/>
     <datalist id="vorschlag">
         <option value="Johnny Depp">
+        <option value="Disraeli">
     </datalist>
     <!-- <button ng-click="reloadAll()" id="button">Search</button> -->
 
@@ -56,7 +57,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="movie in movies">
+        <tr>
             <td>{{movies.uri}}</td>
             <td>{{movies.label}}</td>
             <td>{{movies.runtime}}</td>
