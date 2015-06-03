@@ -9,12 +9,12 @@ training.controller('TrainingController', function ($scope, $http) {
             window.alert('Status ' + status + ': ' + data.message);
         });
     };
-    $scope.getMovies();
+    //$scope.getMovies();
 
     $scope.reloadMovies = function () {
-        var parameter1 =  document.getElementById('input1').value;
+        var parameter = document.getElementById('input1').value;
 
-        $http.get('/api/movies?year='+parameter).success(function (data) {
+        $http.get('/api/movies?year=' + parameter).success(function (data) {
             $scope.movies = data;
         }).error(function (data, status) {
             window.alert('Status ' + status + ': ' + data.message);
@@ -28,12 +28,12 @@ training.controller('TrainingController', function ($scope, $http) {
             window.alert('Status ' + status + ': ' + data.message);
         });
     };
-    $scope.getSongs();
+    //$scope.getSongs();
 
     $scope.reloadSongs = function () {
-        var parameter2 =  document.getElementById('input2').value;
+        var parameter2 = document.getElementById('input2').value;
 
-        $http.get('/api/songs?titel='+parameter2).success(function (data) {
+        $http.get('/api/songs?titel=' + parameter2).success(function (data) {
             $scope.songs = data;
         }).error(function (data, status) {
             window.alert('Status ' + status + ': ' + data.message);
@@ -47,16 +47,34 @@ training.controller('TrainingController', function ($scope, $http) {
             window.alert('Status ' + status + ': ' + data.message);
         });
     };
-    $scope.getActors();
+    //$scope.getActors();
 
     $scope.reloadActors = function () {
-        var parameter3 =  document.getElementById('input3').value;
+        var parameter3 = document.getElementById('input3').value;
 
-        $http.get('/api/actors?film='+parameter3).success(function (data) {
+        $http.get('/api/actors?film=' + parameter3).success(function (data) {
             $scope.actors = data;
         }).error(function (data, status) {
             window.alert('Status ' + status + ': ' + data.message);
         });
     };
+    $scope.loadLatestMovies = function () {
+        /*TO DO
+         Infos via crawler Abrufen und Antwortstring generieren.
+         $scope.news="Dummy Element für viele tolle Filme";
 
+            $scope.latestMovies = 'default';
+        $http.get('/api/latest').success(function (data) {
+            $scope.latestMovies= data;
+        }).error(function (data, status) {
+            window.alert('Status ' + status + ': ' + data.message);
+        });*/
+        $scope.latestMovies="Loading latest movies...";
+        $http.get('/api/latest').success(function (data){alert("JSworked")}).error(function (data){alert("JSfail")});
+        $scope.latestMovies="MOVIE";
+
+
+
+    };
+    //$scope.loadLatestMovies();
 });
