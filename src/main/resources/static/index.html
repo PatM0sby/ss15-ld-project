@@ -57,11 +57,11 @@
         </thead>
         <tbody>
         <tr ng-repeat="movie in movies">
-            <td>{{movie.uri}}</td>
-            <td>{{movie.label}}</td>
-            <td>{{movie.runtime}}</td>
-            <td>{{movie.publicationDate}}</td>
-            <td>{{movie.genre}}</td>
+            <td>{{movies.uri}}</td>
+            <td>{{movies.label}}</td>
+            <td>{{movies.runtime}}</td>
+            <td>{{movies.publicationDate}}</td>
+            <td>{{movies.genre}}</td>
         </tr>
         </tbody>
     </table>
@@ -125,7 +125,7 @@
      });
      */
 
-    document.getElementById("tableMovies").style.display = "none";
+    //document.getElementById("tableMovies").style.display = "none";
     document.getElementById("tableSongs").style.display = "none";
     document.getElementById("tableActors").style.display = "none";
 </script>

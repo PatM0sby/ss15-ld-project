@@ -12,9 +12,9 @@ training.controller('TrainingController', function ($scope, $http) {
     //$scope.getMovies();
 
     $scope.reloadMovies = function () {
-        var parameter = document.getElementById('input1').value;
+        var parameter = document.getElementById('eingabe').value;
 
-        $http.get('/api/movies?year=' + parameter).success(function (data) {
+        $http.get('/api/movies?name=' + parameter).success(function (data) {
             $scope.movies = data;
         }).error(function (data, status) {
             window.alert('Status ' + status + ': ' + data.message);
