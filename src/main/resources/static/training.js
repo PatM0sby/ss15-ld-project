@@ -2,14 +2,18 @@ var training = angular.module('training', ['ui.bootstrap']);
 
 training.controller('TrainingController', function ($scope, $http) {
 
-    $scope.reloadMovies = function () {
-        var parameter = document.getElementById('eingabe').value;
+    $scope.loadMovie = function (film) {
+        //var parameter = document.getElementById('eingabe').value;
 
-        $http.get('/api/movie?titel=' + parameter).success(function (data) {
-            $scope.movies = data;
+        $http.get('/api/movie?titel=' + film).success(function (data) {
+            $scope.movie = data;
         }).error(function (data, status) {
             window.alert('Status ' + status + ': ' + data.message);
         });
+    };
+
+    $scope.updateMovie = function() {
+      $scope.loadMovie($scope.film);
     };
 
     $scope.reloadSongs = function () {
