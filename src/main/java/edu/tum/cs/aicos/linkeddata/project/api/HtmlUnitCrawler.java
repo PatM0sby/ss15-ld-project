@@ -24,7 +24,7 @@ public class HtmlUnitCrawler {
         this.request = request;
     }
 
-    public HtmlUnitCrawler() {
+    public HtmlUnitCrawler() {//test
     }
 
     public HtmlUnitCrawler(String request) {
@@ -55,6 +55,8 @@ public class HtmlUnitCrawler {
             //{"uri":"http://data.linkedmdb.org/resource/film_featured_song/15"
             String result="{\"entries\":\""+answer+"\"}";
                     System.out.println(result);
+            //NewsString ns=new NewsString();
+            //ns.setEntries(answer);
             return result;
             //return answer;
         } catch (IOException e) {
@@ -63,13 +65,13 @@ public class HtmlUnitCrawler {
 
 
 
-        return "failed @HTMLUnitCrawler";}
+        return "failed";}
 
     public static void main(String[] args) throws InterruptedException {
         String answer;
         HtmlUnitCrawler crawler=new HtmlUnitCrawler();
         answer= crawler.getLatestMovies();
-        //System.out.println(answer+"Success");
+        System.out.println(answer+"Success");
 
 
     }

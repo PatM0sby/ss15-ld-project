@@ -160,10 +160,7 @@ public class ApiController {
     }
     @RequestMapping(value = "/latest")
     public String LoadLatestMovies() {
-        HtmlUnitCrawler crawler=new HtmlUnitCrawler();
-
-        NewsString newsString= new NewsString();
-
+       HtmlUnitCrawler crawler = new HtmlUnitCrawler();
         try {
             return crawler.getLatestMovies();
         } catch (InterruptedException e) {
