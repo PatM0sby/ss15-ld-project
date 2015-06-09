@@ -159,13 +159,16 @@ public class ApiController {
 
     }
     @RequestMapping(value = "/latest")
-    public String LoadLatestMovies() {
+    public NewsString LoadLatestMovies() {
        HtmlUnitCrawler crawler = new HtmlUnitCrawler();
         try {
             return crawler.getLatestMovies();
         } catch (InterruptedException e) {
             e.printStackTrace();
-            return "APIFehler";
+            NewsString newsString=new NewsString();
+            newsString.setEntries("failed");
+            return newsString;
+            //return "APIFehler";
 
         }
 

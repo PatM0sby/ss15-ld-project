@@ -36,17 +36,8 @@ training.controller('TrainingController', function ($scope, $http) {
         });
     };
     $scope.loadLatestMovies = function () {
-        /*TO DO
-         Infos via crawler Abrufen und Antwortstring generieren.
-         $scope.news="Dummy Element für viele tolle Filme";
 
-            $scope.latestMovies = 'default';
-        $http.get('/api/latest').success(function (data) {
-            $scope.latestMovies= data;
-        }).error(function (data, status) {
-            window.alert('Status ' + status + ': ' + data.message);
-        });*/
-        $scope.latestMovies="Loading latest movies...";
+
         $http.get('/api/latest').success(function (data){$scope.latestMovies = data;})
             .error(function (data, status){window.alert('Status '+ status);
             });
