@@ -62,19 +62,6 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
 
         $scope.youtube=$sce.trustAsResourceUrl(yt.id);
 
-
-
-
-       /* var makeIframe = document.createElement("iframe");
-        makeIframe.setAttribute("src", "http://www.youtube.com/embed/LJP1DphOWPs?autoplay=0");
-        makeIframe.setAttribute("id", "player");
-        makeIframe.setAttribute("width", "420");
-        makeIframe.setAttribute("height", "315");*/
-       /* var frame=$compile('<iframe id="player" width="420" height="315" ng-src="http://www.youtube.com/embed/LJP1DphOWPs?autoplay=0" </iframe>')($scope)
-        angular.element(document.getElementById('YoutubePlayer')).append
-        (frame);*/
-
-
     };
 
 
