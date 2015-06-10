@@ -24,6 +24,8 @@
         <p>brought to you by PDS</p>
     </div>
 
+
+    <div>
     Latest Movies:
     <marquee behavior="scroll" direction="left" width="400px">
 
@@ -34,6 +36,7 @@
 
 
     </marquee>
+    </div>
 
     <br>
     <br>
@@ -43,6 +46,8 @@
     <datalist id="vorschlag">
         <option value="Johnny Depp">
         <option value="Disraeli">
+        <option value="Nobody Does It Better">
+        <option value="Peter O'Toole">
     </datalist>
     <!-- <button ng-click="reloadAll()" id="button">Search</button> -->
 
@@ -59,7 +64,7 @@
         </thead>
         <tbody>
         <tr>
-            <td>{{movie.uri}}</td>
+            <td><a href="{{movie.uri}}">{{movie.uri}}</a></td>
             <td>{{movie.label}}</td>
             <td>{{movie.runtime}}</td>
             <td>{{movie.publicationDate}}</td>
@@ -79,8 +84,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="song in songs">
-            <td>{{song.uri}}</td>
+        <tr>
+            <td><a href="{{song.uri}}">{{song.uri}}</a></td>
             <td>{{song.label}}</td>
             <td>{{song.interpretName}}</td>
             <td>{{song.movies}}</td>
@@ -98,8 +103,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="actor in actors">
-            <td>{{actor.uri}}</td>
+        <tr>
+            <td><a href="{{actor.uri}}">{{actor.uri}}</a></td>
             <td>{{actor.label}}</td>
             <td>{{actor.movies}}</td>
         </tr>
@@ -108,28 +113,21 @@
 
 </div>
 
+
+
+
+<iframe width="420" height="315" ng-src="{{youtube}}"></iframe>
+
+<div id="YoutubePlayer">
+</div>
+
+
+<footer style="position: absolute; bottom: 5%; margin-left: 50%; background-color: blanchedalmond"><a href="impressum.html">Impressum</a></footer>
+
 <script>
-    function myFunction() {
-        //reloadMovies();
-        //reloadActors();
-        //reloadSongs();
-        //var hugo = document.getElementById('eingabe');
-        //alert('Die Eingabe: '+hugo.value);
-    }
-
-    /*
-     var availableTags = ["Johnny Depp"];
-
-     $(function(){
-     $('#autocomplete-default').autocomplete({
-     source : availableTags
-     });
-     });
-     */
-
-    //document.getElementById("tableMovies").style.display = "none";
-    document.getElementById("tableSongs").style.display = "none";
+    document.getElementById("tableMovies").style.display = "none";
     document.getElementById("tableActors").style.display = "none";
+    document.getElementById("tableSongs").style.display = "none";
 </script>
 
 </body>
