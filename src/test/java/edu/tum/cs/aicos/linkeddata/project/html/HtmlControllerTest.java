@@ -172,4 +172,19 @@ public class HtmlControllerTest {
         }
     }
 
+    @Test
+    public void testImpressum() throws Exception {
+        logger.debug("testimpressum begin");
+
+        URL url = new URL("http://127.0.0.1:" + port + "/impressum.html");
+        HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+        connection.setRequestMethod("GET");
+        connection.connect();
+        int code = connection.getResponseCode();
+
+        org.junit.Assert.assertEquals(code, 200);
+
+        logger.debug("testImpressum end");
+    }
+
 }
