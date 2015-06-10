@@ -24,6 +24,8 @@
         <p>brought to you by PDS</p>
     </div>
 
+
+    <div>
     Latest Movies:
     <marquee behavior="scroll" direction="left" width="400px">
 
@@ -34,12 +36,12 @@
 
 
     </marquee>
+    </div>
 
     <br>
     <br>
 
 
-    <!--;updateSong();updateActor();updateAll().delay(5000)-->
     Suche: <input type="text" id="eingabe" ng-model="film" size="50" placeholder="Movies, Songs, Actors.." ng-change="updateMovie()" list="vorschlag" autocomplete="on"/>
     <datalist id="vorschlag">
         <option value="Johnny Depp">
@@ -110,6 +112,15 @@
     </table>
 
 </div>
+
+
+
+
+<iframe width="420" height="315" ng-src="{{youtube}}"></iframe>
+
+<div id="YoutubePlayer">
+</div>
+
 
 <footer style="position: absolute; bottom: 5%; margin-left: 50%; background-color: blanchedalmond"><a href="impressum.html">Impressum</a></footer>
 

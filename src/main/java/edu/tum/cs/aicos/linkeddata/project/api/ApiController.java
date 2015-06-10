@@ -173,4 +173,13 @@ public class ApiController {
         }
 
     }
+
+    @RequestMapping(value = "/youtube")
+    public YoutubeVideo LoadYoutubeID(@RequestParam(value = "watch", defaultValue = "default") String name) throws InterruptedException {
+        HtmlUnitCrawler crawler = new HtmlUnitCrawler();
+        String id= crawler.getYoutubeVideo(name);
+        YoutubeVideo vid=new YoutubeVideo(id);
+        return vid;
+
+    }
 }

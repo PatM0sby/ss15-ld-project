@@ -1,6 +1,7 @@
 var training = angular.module('training', ['ui.bootstrap']);
 
-training.controller('TrainingController', function ($scope, $http) {
+training.controller('TrainingController', function ($scope, $http, $compile, $sce) {
+
 
     $scope.loadMovie = function (film) {
         //var parameter = document.getElementById('eingabe').value;
@@ -12,6 +13,8 @@ training.controller('TrainingController', function ($scope, $http) {
         });
         $scope.updateSong();
     };
+
+
 
     $scope.updateMovie = function() {
         $scope.loadMovie($scope.film);
@@ -86,4 +89,24 @@ training.controller('TrainingController', function ($scope, $http) {
 
     };
     $scope.loadLatestMovies();
+
+    $scope.addYoutube = function () {
+        var parameter = document.getElementById('eingabe').value;
+
+        $http.get('/api/youtube?watch=' + parameter).success(function (data){yt= data;})
+            .error(function (data, status){window.alert('Status '+ status);
+            });
+
+
+
+        $scope.youtube=$sce.trustAsResourceUrl(yt.id);
+
+    };
+
+
+
+
+
+
+        //
 });
