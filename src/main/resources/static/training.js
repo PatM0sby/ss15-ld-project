@@ -1,6 +1,7 @@
 var training = angular.module('training', ['ui.bootstrap']);
 
-training.controller('TrainingController', function ($scope, $http) {
+training.controller('TrainingController', function ($scope, $http, $compile, $sce) {
+
 
     $scope.loadMovie = function (film) {
         //var parameter = document.getElementById('eingabe').value;
@@ -11,6 +12,8 @@ training.controller('TrainingController', function ($scope, $http) {
             window.alert('Status ' + status + ': ' + data.message);
         });
     };
+
+
 
     $scope.updateMovie = function() {
       $scope.loadMovie($scope.film);
@@ -47,4 +50,37 @@ training.controller('TrainingController', function ($scope, $http) {
 
     };
     $scope.loadLatestMovies();
+
+    $scope.addYoutube = function () {
+        var parameter = document.getElementById('eingabe').value;
+
+        $http.get('/api/youtube?watch=' + parameter).success(function (data){yt= data;})
+            .error(function (data, status){window.alert('Status '+ status);
+            });
+
+
+
+        $scope.youtube=$sce.trustAsResourceUrl(yt.id);
+
+
+
+
+       /* var makeIframe = document.createElement("iframe");
+        makeIframe.setAttribute("src", "http://www.youtube.com/embed/LJP1DphOWPs?autoplay=0");
+        makeIframe.setAttribute("id", "player");
+        makeIframe.setAttribute("width", "420");
+        makeIframe.setAttribute("height", "315");*/
+       /* var frame=$compile('<iframe id="player" width="420" height="315" ng-src="http://www.youtube.com/embed/LJP1DphOWPs?autoplay=0" </iframe>')($scope)
+        angular.element(document.getElementById('YoutubePlayer')).append
+        (frame);*/
+
+
+    };
+
+
+
+
+
+
+        //
 });

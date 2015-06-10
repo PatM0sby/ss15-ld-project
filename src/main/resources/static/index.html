@@ -24,6 +24,8 @@
         <p>brought to you by PDS</p>
     </div>
 
+
+    <div>
     Latest Movies:
     <marquee behavior="scroll" direction="left" width="400px">
 
@@ -34,9 +36,8 @@
 
 
     </marquee>
+    </div>
 
-    <br>
-    <br>
 
 
     Suche: <input type="text" id="eingabe" ng-model="film" size="50" placeholder="Movies, Songs, Actors.." ng-change="updateMovie()" list="vorschlag" autocomplete="on"/>
@@ -107,6 +108,21 @@
     </table>
 
 </div>
+
+
+<button ng-click="addYoutube()">
+    LoadPlayer
+</button>
+
+<button ng-click="changeYoutube()">
+    ChangePlayer
+</button>
+
+<iframe width="420" height="315" ng-src="{{youtube}}"></iframe>
+
+<div id="YoutubePlayer">
+</div>
+
 
 <script>
     function myFunction() {
