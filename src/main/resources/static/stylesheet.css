@@ -5,6 +5,20 @@
     padding:10px;
 }
 
+#sidebar_left {
+    position:absolute;
+    top:12.5%; bottom:3.5%; left:0;
+    width:10%;
+    background:#efefef;
+}
+
+#sidebar_right {
+    position:absolute;
+    top:12.5%; bottom:3.5%; right:0;
+    width:10%;
+    background:#efefef;
+}
+
 #footer {
     position:fixed;
     bottom:0px;
@@ -16,4 +30,5 @@
 
 #content_container {
     padding-bottom:3em;
+    margin-left:10%;
 }

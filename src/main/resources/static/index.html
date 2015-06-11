@@ -17,7 +17,6 @@
 
 <body ng-controller="TrainingController">
 
-<div id="content_container">
 <div id="header">
 
     <!--<div class="jumbotron">-->
@@ -26,15 +25,28 @@
         <p>brought to you by PDS</p>
     <!--</div>-->
 </div>
+<div id="sidebar_left">
 
     <div>
+        Suche:
+        <input type="text" id="eingabe" ng-model="film" size="22" placeholder="Movies, Songs, Actors.." ng-change="updateMovie()" list="vorschlag" autocomplete="on"/>
+        <datalist id="vorschlag">
+            <option value="Johnny Depp">
+            <option value="Disraeli">
+            <option value="Nobody Does It Better">
+            <option value="Peter O'Toole">
+        </datalist>
+    </div>
+
+</div>
+<div id="sidebar_right">Sidebar-Right</div>
+<div id="content_container">
+    <div>
     Latest Movies:
-    <marquee behavior="scroll" direction="left" width="400px">
+    <marquee behavior="scroll" direction="left" width="80%">
 
 
         <p>{{latestMovies.entries}}</p>
-
-
 
 
     </marquee>
@@ -42,16 +54,6 @@
 
     <br>
     <br>
-
-
-    Suche: <input type="text" id="eingabe" ng-model="film" size="50" placeholder="Movies, Songs, Actors.." ng-change="updateMovie()" list="vorschlag" autocomplete="on"/>
-    <datalist id="vorschlag">
-        <option value="Johnny Depp">
-        <option value="Disraeli">
-        <option value="Nobody Does It Better">
-        <option value="Peter O'Toole">
-    </datalist>
-    <!-- <button ng-click="reloadAll()" id="button">Search</button> -->
 
     <table class="table table-hover" id="tableMovies">
         <thead>
@@ -113,18 +115,20 @@
         </tbody>
     </table>
 
-</div>
 
 
 
 
+<div id="youtube">
 <iframe width="420" height="315" ng-src="{{youtube}}"></iframe>
 
 <div id="YoutubePlayer">
 </div>
+</div>
 
 </div>
-<div id="footer"><a href="impressum.html">Impressum</a></div>
+
+<div id="footer"><a href="impressum.html">Impressum  </a><a href="contact.php">  Kontakt</a></div>
 
 <script>
     document.getElementById("tableMovies").style.display = "none";
