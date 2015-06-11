@@ -1,0 +1,12 @@
+#footer {
+    position:fixed;
+    bottom:0px;
+    background:#efefef;
+    text-align:center;
+    padding:10px;
+    width:100%;
+}
+
+#content_container {
+    padding-bottom:3em;
+}
