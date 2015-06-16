@@ -15,17 +15,23 @@
 
 </head>
 
-<body ng-controller="TrainingController">
+<body ng-controller="TrainingController" style="background-image:url(hintergrund.jpg)">
 
 <div id="header">
 
-    <!--<div class="jumbotron">-->
-        <h1>Movie OvReview</h1>
+    <img src="LinkedDB_Logo.jpg" alt="Logo" height="80px" width="128px" style="float:left">
 
-        <p>brought to you by PDS</p>
-    <!--</div>-->
+        <div overflow="auto" style="margin-top:1.75%">
+            <input type="text" id="eingabe" ng-model="film" size="150" placeholder="Movies, Songs, Actors.." ng-change="updateMovie()" list="vorschlag" autocomplete="on"/>
+            <datalist id="vorschlag">
+                <option value="Johnny Depp">
+                <option value="Disraeli">
+                <option value="Nobody Does It Better">
+                <option value="Peter O'Toole">
+            </datalist>
+        </div>
 </div>
-<div id="sidebar_left">
+<!--<div id="sidebar_left">
 
     <div>
         Suche:
@@ -39,21 +45,21 @@
     </div>
 
 </div>
-<div id="sidebar_right">Sidebar-Right</div>
+<div id="sidebar_right">Sidebar-Right</div>-->
+
+<div id="laufband">
+    <div style="color:white">
+        <marquee behavior="scroll" direction="left" width="100%">
+
+            <p>{{latestMovies.entries}}</p>
+
+        </marquee>
+    </div>
+</div>
 <div id="content_container">
     <div>
-    Latest Movies:
-    <marquee behavior="scroll" direction="left" width="80%">
-
-
-        <p>{{latestMovies.entries}}</p>
-
-
-    </marquee>
+        Content
     </div>
-
-    <br>
-    <br>
 
     <table class="table table-hover" id="tableMovies">
         <thead>
@@ -128,7 +134,7 @@
 
 </div>
 
-<div id="footer"><a href="impressum.html">Impressum  </a><a href="contact.php">  Kontakt</a></div>
+<div id="footer"><a href="impressum.html" style="color:white">Impressum  |</a><a href="contact.php" style="color:white">|  Kontakt</a></div>
 
 <script>
     document.getElementById("tableMovies").style.display = "none";

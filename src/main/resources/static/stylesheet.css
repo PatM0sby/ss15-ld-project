@@ -1,8 +1,9 @@
 #header{
-    width:100%;
-    background:#efefef;
+    width:80%;
     text-align:center;
     padding:10px;
+    margin-left:10%;
+    overflow:auto;
 }
 
 #sidebar_left {
@@ -22,13 +23,14 @@
 #footer {
     position:fixed;
     bottom:0px;
-    background:#efefef;
     text-align:center;
     padding:10px;
-    width:100%;
+    width:80%;
+    margin-left:10%;
 }
 
 #content_container {
     padding-bottom:3em;
     margin-left:10%;
+    width:80%;
 }
