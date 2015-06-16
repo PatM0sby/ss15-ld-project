@@ -33,18 +33,18 @@
 </div>
 
 <div id="laufband">
-    <div style="color:white">
+
         <marquee behavior="scroll" direction="left" width="100%">
 
             <p>{{latestMovies.entries}}</p>
 
         </marquee>
-    </div>
+
 </div>
 
 <div id="content_container">
     <div id="content">
-
+<!--
     <table class="table table-hover" id="tableMovies">
         <thead>
         <tr>
@@ -104,10 +104,18 @@
         </tr>
         </tbody>
     </table>
+-->
+        <div style="overflow:auto">
+        <img src="Disraeli_film.jpg" style="float:left">
+        <!--<img src="beschreibung.jpg" width="600" height="300">-->
+        <h1>{{movie.label}}</h1>
+        </div>
+        <div>
+            Benjamin Disraeli ist Premierminister und steht in Konflikt mit dem liberalen Oppositionsführer William Ewart Gladstone. Beide streiten vor allem darum, welche Politik Großbritannien in Hinblick auf den gerade fertiggestellten Suezkanal einschlagen soll, der von erheblicher Bedeutung für den Seeweg nach Indien und damit zu der Kolonie des Königreichs werden wird. Als der ägyptische Machthaber Ismael Pasha in finanzielle Schwierigkeiten gerät, plant Disraeli im Alleingang, die Aktienmehrheit am Kanal zu übernehmen. Seine politischen Gegner torpedieren den Plan, den eine russische Spionin publik gemacht hat. Die Bank von England verweigert dem Premier den notwendigen Kredit für die Transaktion, so dass dieser sich an den unermesslich reichen jüdischen Bankier Hugh Meyers wenden muss. Um die britische Herrschaft über Indien zu sichern, lässt der Premierminister die Königin Victoria zu Kaiserin von Indien krönen. Auf dem Höhepunkt seiner Macht erweist ihm die Königin die einmalige Ehre, persönlich auf einem Empfang in Downing Street zu erscheinen.
+        </div>
 
-        <img src="bild.jpg" width="600" height="300">
-        <img src="beschreibung.jpg" width="600" height="300">
     </div>
+
 
     <div id="sidebar_right">
         <div id="youtube">
@@ -116,7 +124,18 @@
             <div id="YoutubePlayer">
             </div>
         </div>
-        <img src="infos.jpg" width="400" height="200">
+
+        <br>
+        <br>
+
+        <div id="tableMovies">
+            URI: {{movie.uri}} <br>
+            Label: <a href="{{movie.uri}}">{{movie.label}}</a> <br>
+            Runtime: {{movie.runtime}} <br>
+            Publicationdate: {{movie.publicationDate}} <br>
+            Genre: {{movie.genre}}
+        </div>
+        <!--<img src="infos.jpg" width="400" height="200">-->
     </div>
 </div>
 

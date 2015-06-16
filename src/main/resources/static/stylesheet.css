@@ -9,6 +9,7 @@
 #laufband{
     width:70%;
     margin-left:15%;
+    color:white;
 }
 
 #content_container {
@@ -30,6 +31,10 @@
     right:15%;
     width:25%;
     background:#000;
+}
+
+#tableMovies {
+    color:white;
 }
 
 #footer {
