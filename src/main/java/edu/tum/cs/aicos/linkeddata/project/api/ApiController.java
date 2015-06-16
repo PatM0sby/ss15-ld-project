@@ -182,4 +182,11 @@ public class ApiController {
         return vid;
 
     }
+
+    @RequestMapping(value = "/personpic")
+    public String LoadActorPic(@RequestParam(value = "name", defaultValue = "default") String name) throws InterruptedException {
+        HtmlUnitCrawler crawler = new HtmlUnitCrawler();
+        return crawler.getPersonPic(name);
+
+    }
 }

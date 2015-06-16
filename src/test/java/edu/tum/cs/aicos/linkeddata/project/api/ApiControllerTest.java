@@ -74,4 +74,17 @@ public class ApiControllerTest {
         logger.debug("testSong end");
     }
 
+    @Test
+    public void testPersonpic() throws Exception {
+        logger.debug("Personpic begin");
+        RestTemplate browser1 = new TestRestTemplate();
+        ResponseEntity<String> responseEntity = browser1.getForEntity(
+                "http://127.0.0.1:" + port + "/api/personpic?name=Moritz Bleibtreu", String.class);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        String data = responseEntity.getBody();
+        assertEquals("//upload.wikimedia.org/wikipedia/commons/thumb/3/38/Flickr_-_Siebbi_-_Moritz_Bleibtreu_%281%29.jpg/220px-Flickr_-_Siebbi_-_Moritz_Bleibtreu_%281%29.jpg", data);
+
+        logger.debug("Personpic end");
+    }
+
 }

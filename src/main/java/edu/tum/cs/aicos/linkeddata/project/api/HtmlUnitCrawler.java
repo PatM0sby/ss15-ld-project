@@ -12,6 +12,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.w3c.dom.html.HTMLImageElement;
 
 
 import java.io.IOException;
@@ -125,6 +126,27 @@ public class HtmlUnitCrawler {
         //*[@id="item-section-676589"]/li[1]/div/div/div[2]/h3/a
 
     return "http://jsoup.org/cookbook/extracting-data/attributes-text-html";}
+
+
+    public String getPersonPic(String name) { //name has to be "Firstname Lastname"
+        System.out.println("Request: " + name);
+
+        name = name.replace(" ", "_");
+        String query = "https://de.wikipedia.org/wiki/" + name;
+        System.out.println("Requesting: " + query);
+        WebClient browser = new WebClient(BrowserVersion.CHROME);
+        browser.getOptions().setThrowExceptionOnScriptError(false);
+        try {
+            HtmlPage page = browser.getPage(query);
+            HtmlImage a = (HtmlImage) page.getByXPath("//*[@id=\"mw-content-text\"]/div[1]/div/a/img").get(0);
+
+            return a.getSrcAttribute();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+        //*[@id="item-section-676589"]/li[1]/div/div/div[2]/h3/a
 
     public static void main (String [] args){
 
