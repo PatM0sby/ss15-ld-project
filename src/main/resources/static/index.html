@@ -19,7 +19,7 @@
 
 <div id="header">
 
-    <img src="LinkedDB_Logo.jpg" alt="Logo" height="80px" width="128px" style="float:left">
+    <img src="logo2.jpg" alt="Logo" height="80px" width="160px" style="float:left">
 
         <div overflow="auto" style="margin-top:1.75%">
             <input type="text" id="eingabe" ng-model="film" size="150" placeholder="Movies, Songs, Actors.." ng-change="updateMovie()" list="vorschlag" autocomplete="on"/>
@@ -31,21 +31,6 @@
             </datalist>
         </div>
 </div>
-<!--<div id="sidebar_left">
-
-    <div>
-        Suche:
-        <input type="text" id="eingabe" ng-model="film" size="22" placeholder="Movies, Songs, Actors.." ng-change="updateMovie()" list="vorschlag" autocomplete="on"/>
-        <datalist id="vorschlag">
-            <option value="Johnny Depp">
-            <option value="Disraeli">
-            <option value="Nobody Does It Better">
-            <option value="Peter O'Toole">
-        </datalist>
-    </div>
-
-</div>
-<div id="sidebar_right">Sidebar-Right</div>-->
 
 <div id="laufband">
     <div style="color:white">
@@ -56,10 +41,9 @@
         </marquee>
     </div>
 </div>
+
 <div id="content_container">
-    <div>
-        Content
-    </div>
+    <div id="content">
 
     <table class="table table-hover" id="tableMovies">
         <thead>
@@ -121,17 +105,19 @@
         </tbody>
     </table>
 
+        <img src="bild.jpg" width="600" height="300">
+        <img src="beschreibung.jpg" width="600" height="300">
+    </div>
 
+    <div id="sidebar_right">
+        <div id="youtube">
+            <iframe width="420" height="315" ng-src="{{youtube}}"></iframe>
 
-
-
-<div id="youtube">
-<iframe width="420" height="315" ng-src="{{youtube}}"></iframe>
-
-<div id="YoutubePlayer">
-</div>
-</div>
-
+            <div id="YoutubePlayer">
+            </div>
+        </div>
+        <img src="infos.jpg" width="400" height="200">
+    </div>
 </div>
 
 <div id="footer"><a href="impressum.html" style="color:white">Impressum  |</a><a href="contact.php" style="color:white">|  Kontakt</a></div>
