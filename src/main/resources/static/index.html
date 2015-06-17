@@ -15,7 +15,7 @@
 
 </head>
 
-<body ng-controller="TrainingController" style="background-image:url(hintergrund.jpg)">
+<body ng-controller="TrainingController" style="background-image:url(hintergrund.jpg)" link="red" vlink="#8b0000">
 
 <div id="header">
 
@@ -130,16 +130,29 @@
 
         <div id="tableMovies">
             URI: {{movie.uri}} <br>
-            Label: <a href="{{movie.uri}}">{{movie.label}}</a> <br>
+            Label: <a href="{{movie.uri}}" style="color:red">{{movie.label}}</a> <br>
             Runtime: {{movie.runtime}} <br>
             Publicationdate: {{movie.publicationDate}} <br>
             Genre: {{movie.genre}}
+        </div>
+
+        <div id="tableSongs">
+            URI: {{song.uri}} <br>
+            Label: <a href="{{song.uri}}" style="color:red">{{movie.label}}</a> <br>
+            Interpret: {{song.interpretName}} <br>
+            Movies: {{song.movies}} <br>
+        </div>
+
+        <div id="tableActors">
+            URI: {{actor.uri}} <br>
+            Label: <a href="{{actor.uri}}" style="color:red">{{movie.label}}</a> <br>
+            Movies: {{actor.movies}} <br>
         </div>
         <!--<img src="infos.jpg" width="400" height="200">-->
     </div>
 </div>
 
-<div id="footer"><a href="impressum.html" style="color:white">Impressum  |</a><a href="contact.php" style="color:white">|  Kontakt</a></div>
+<div id="footer"><a href="impressum.html" style="color:white">Impressum  |</a><a href="mailto:test@test.de" style="color:white">|  Kontakt</a></div>
 
 <script>
     document.getElementById("tableMovies").style.display = "none";
