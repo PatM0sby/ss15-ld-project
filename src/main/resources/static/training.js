@@ -14,6 +14,9 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
         $scope.updateSong();
     };
 
+    $scope.loadActorPic = function (name){
+
+    }
 
 
     $scope.updateMovie = function() {
@@ -71,7 +74,7 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
     $scope.loadLatestMovies = function () {
         /*TO DO
          Infos via crawler Abrufen und Antwortstring generieren.
-         $scope.news="Dummy Element für viele tolle Filme";
+         $scope.news="Dummy Element fï¿½r viele tolle Filme";
 
          $scope.latestMovies = 'default';
          $http.get('/api/latest').success(function (data) {
@@ -103,6 +106,14 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
 
     };
 
+    $scope.addPersonPic = function () {
+        //var parameter = document.getElementById('eingabe').value;
+        var parameter = "Moritz Bleibtreu"
+        $http.get('/api/personpic?name=' + parameter).success(function (data){actorpic= data;})
+            .error(function (data, status){window.alert('Status '+ status);
+            });
+
+    };
 
 
 
