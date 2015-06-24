@@ -39,9 +39,6 @@ public class HtmlUnitCrawler {
     public NewsString getLatestMovies() throws InterruptedException {
 
         WebClient browser=new WebClient(BrowserVersion.CHROME);
-        browser.getOptions().setThrowExceptionOnScriptError(false);
-        browser.getOptions().setThrowExceptionOnFailingStatusCode(false);
-
         try {
             HtmlPage page=browser.getPage("http://www.showcasecinemas.co.uk/films");
             //String liste =(String) page.getByXPath("").toString();
@@ -91,7 +88,6 @@ public class HtmlUnitCrawler {
         System.out.println("Requesting: " + query);
         WebClient browser=new WebClient(BrowserVersion.CHROME);
         browser.getOptions().setThrowExceptionOnScriptError(false);
-        browser.getOptions().setThrowExceptionOnFailingStatusCode(false);
 
         try {
             HtmlPage page=browser.getPage(query);
@@ -171,7 +167,6 @@ public class HtmlUnitCrawler {
         System.out.println("Requesting: " + query);
         WebClient browser = new WebClient(BrowserVersion.CHROME);
         browser.getOptions().setThrowExceptionOnScriptError(false);
-        browser.getOptions().setThrowExceptionOnFailingStatusCode(false);
         try {
             HtmlPage page = browser.getPage(query);
             HtmlImage a = (HtmlImage) page.getByXPath("//*[@id=\"mw-content-text\"]/div[1]/div/a/img").get(0);
