@@ -110,22 +110,12 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
 
     };
 
-    $scope.addYoutube();
-
     $scope.reloadYoutube = function () {
-
-
-        $http.get('/api/youtube?watch=batman v superman').success(function (data){$scope.youtube= data;})
-            .error(function (data, status){window.alert('Status '+ status);
-            });
-
-
-
+        $scope.addYoutube();
+        document.getElementById('ytiframe').location.reload();
     };
 
     $scope.addYoutube();
-
-
 
 
     $scope.addPersonPic = function () {

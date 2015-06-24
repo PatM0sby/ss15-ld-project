@@ -22,7 +22,7 @@
     <img src="logo2.jpg" alt="Logo" height="80px" width="160px" style="float:left">
 
         <div overflow="auto" style="margin-top:1.75%">
-            <input type="text" id="eingabe" ng-model="film" size="150" placeholder="Movies, Songs, Actors.." ng-change="updateMovie()" list="vorschlag" autocomplete="on"/>
+            <input type="text" id="eingabe" ng-model="film" size="150" placeholder="Movies, Songs, Actors.." ng-change="updateMovie(); addYoutube()" ng-model-options= "{debounce:3000}" list="vorschlag" autocomplete="on"/>
             <datalist id="vorschlag">
                 <option value="Johnny Depp">
                 <option value="Disraeli">
@@ -119,7 +119,7 @@
 
     <div id="sidebar_right">
         <div id="youtube">
-            <iframe width="380.25" height="323" ng-src="{{youtube.id}}"></iframe>
+            <iframe id="ytiframe" width="380.25" height="323" ng-src="{{youtube.id}}"></iframe>
 
 
 
