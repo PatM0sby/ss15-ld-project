@@ -80,6 +80,7 @@ public class HtmlUnitCrawler {
 
 
     public String getYoutubeVideo(String name){
+
         System.out.println("Request: "+name);
 
         name=name.replace(" ", "+");
@@ -87,6 +88,7 @@ public class HtmlUnitCrawler {
         System.out.println("Requesting: " + query);
         WebClient browser=new WebClient(BrowserVersion.CHROME);
         browser.getOptions().setThrowExceptionOnScriptError(false);
+
         try {
             HtmlPage page=browser.getPage(query);
             //System.out.println(page.asXml());
@@ -111,12 +113,41 @@ public class HtmlUnitCrawler {
             //System.out.println(doc.toString());
             Elements links = doc.select("a[href]");
             Object[]array = links.toArray();
+
             //Element link= links.
             //System.out.println(links.toString());
             //System.out.println(array[40].toString());
-            String id= array[40].toString().substring(18,29);
+
+            //String id= array[40].toString().substring(18,29);
+
+            //Skip static page content
+            int i=40;
+            String id="";
+            while(i<=100) {
+
+                //get first video href
+                if(array[i].toString().contains("watch?v=")){
+
+                    //extract video ID
+                    String [] split=array[i].toString().split("watch\\?v=");
+                    String id_and_more=split[1];
+                    id=id_and_more.substring(0,11);
+
+
+
+                    break;
+                }
+
+
+                i++;
+            }
+            //String id= array[40].toString().substring(18,29);
             System.out.println("ID: "+id);
-            String youtubelink="https://www.youtube.com/watch?v="+id;
+
+            //generate YoutubeLink
+
+            //String youtubelink="https://www.youtube.com/watch?v="+id;
+            String youtubelink="https://www.youtube.com/embed/"+id+"?autoplay=1";
             System.out.println("Returned: "+youtubelink);
             return youtubelink;
         } catch (IOException e) {
@@ -151,7 +182,7 @@ public class HtmlUnitCrawler {
     public static void main (String [] args){
 
         HtmlUnitCrawler crawler=new HtmlUnitCrawler();
-        crawler.getYoutubeVideo("zwei");
+        crawler.getYoutubeVideo("hunger games");
     }
 }
 

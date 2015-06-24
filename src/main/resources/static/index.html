@@ -119,10 +119,10 @@
 
     <div id="sidebar_right">
         <div id="youtube">
-            <iframe width="420" height="315" ng-src="{{youtube}}"></iframe>
+            <iframe width="380.25" height="323" ng-src="{{youtube.id}}"></iframe>
 
-            <div id="YoutubePlayer">
-            </div>
+
+
         </div>
 
         <br>
@@ -152,7 +152,11 @@
     </div>
 </div>
 
-<div id="footer" style="color:white"><a href="impressum.html">Impressum  |</a><a href="mailto:test@test.de">|  Kontakt</a></div>
+<div id="footer" style="color:white"><a href="impressum.html">Impressum  |</a><a href="mailto:test@test.de">|  Kontakt</a>
+
+    <a id="myLink" href="#" ng-click="reloadYoutube()">  ||  Reload</a>
+
+</div>
 
 <script>
     document.getElementById("tableMovies").style.display = "none";

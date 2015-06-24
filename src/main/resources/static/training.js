@@ -1,4 +1,8 @@
-var training = angular.module('training', ['ui.bootstrap']);
+var training = angular.module('training', ['ui.bootstrap']).config(function($sceDelegateProvider) {
+    $sceDelegateProvider.resourceUrlWhitelist([
+        'self',
+        'https://www.youtube.com/**']);
+});
 
 training.controller('TrainingController', function ($scope, $http, $compile, $sce) {
 
@@ -96,15 +100,33 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
     $scope.addYoutube = function () {
         var parameter = document.getElementById('eingabe').value;
 
-        $http.get('/api/youtube?watch=' + parameter).success(function (data){yt= data;})
+        $http.get('/api/youtube?watch=' + parameter).success(function (data){$scope.youtube= data;})
+            .error(function (data, status){window.alert('Status '+ status);
+            });
+
+        
+
+        //$scope.youtube=$sce.trustAsResourceUrl("http://www.youtube.com/embed/RrcTOKm7zMo?autoplay=1");
+
+    };
+
+    $scope.addYoutube();
+
+    $scope.reloadYoutube = function () {
+
+
+        $http.get('/api/youtube?watch=batman v superman').success(function (data){$scope.youtube= data;})
             .error(function (data, status){window.alert('Status '+ status);
             });
 
 
 
-        $scope.youtube=$sce.trustAsResourceUrl(yt.id);
-
     };
+
+    $scope.addYoutube();
+
+
+
 
     $scope.addPersonPic = function () {
         //var parameter = document.getElementById('eingabe').value;
@@ -114,6 +136,7 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
             });
 
     };
+
 
 
 
