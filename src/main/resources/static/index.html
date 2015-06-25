@@ -22,7 +22,7 @@
     <img src="logo2.jpg" alt="Logo" height="80px" width="160px" style="float:left">
 
         <div overflow="auto" style="margin-top:1.75%">
-            <input type="text" id="eingabe" ng-model="film" size="150" placeholder="Movies, Songs, Actors.." ng-change="updateMovie(); addYoutube()" ng-model-options= "{debounce:3000}" list="vorschlag" autocomplete="on"/>
+            <input type="text" id="eingabe" ng-model="film" size="150" placeholder="Movies, Songs, Actors.." ng-change="updateMovie();updateSong();updateActor(); addYoutube(); addPersonPic()" list="vorschlag" autocomplete="on"/>
             <datalist id="vorschlag">
                 <option value="Johnny Depp">
                 <option value="Disraeli">
@@ -44,71 +44,13 @@
 
 <div id="content_container">
     <div id="content">
-<!--
-    <table class="table table-hover" id="tableMovies">
-        <thead>
-        <tr>
-            <th>uri</th>
-            <th>Label</th>
-            <th>Runtime</th>
-            <th>Publicationdate</th>
-            <th>Genre</th>
 
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td><a href="{{movie.uri}}">{{movie.uri}}</a></td>
-            <td>{{movie.label}}</td>
-            <td>{{movie.runtime}}</td>
-            <td>{{movie.publicationDate}}</td>
-            <td>{{movie.genre}}</td>
-        </tr>
-        </tbody>
-    </table>
-
-    <table class="table table-hover" id="tableSongs">
-        <thead>
-        <tr>
-            <th>uri</th>
-            <th>Label</th>
-            <th>Interpretname</th>
-            <th>movies</th>
-
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td><a href="{{song.uri}}">{{song.uri}}</a></td>
-            <td>{{song.label}}</td>
-            <td>{{song.interpretName}}</td>
-            <td>{{song.movies}}</td>
-        </tr>
-        </tbody>
-    </table>
-
-    <table class="table table-hover" id="tableActors">
-        <thead>
-        <tr>
-            <th>uri</th>
-            <th>Label</th>
-            <th>Movies</th>
-
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td><a href="{{actor.uri}}">{{actor.uri}}</a></td>
-            <td>{{actor.label}}</td>
-            <td>{{actor.movies}}</td>
-        </tr>
-        </tbody>
-    </table>
--->
         <div style="overflow:auto">
-        <img src="Disraeli_film.jpg" style="float:left">
+        <img src="{{actorpic}}" style="float:left" alt="crawlerpic">
         <!--<img src="beschreibung.jpg" width="600" height="300">-->
         <h1>{{movie.label}}</h1>
+            <h1>{{song.label}}</h1>
+            <h1>{{actor.label}}</h1>
         </div>
         <div>
             Benjamin Disraeli ist Premierminister und steht in Konflikt mit dem liberalen Oppositionsführer William Ewart Gladstone. Beide streiten vor allem darum, welche Politik Großbritannien in Hinblick auf den gerade fertiggestellten Suezkanal einschlagen soll, der von erheblicher Bedeutung für den Seeweg nach Indien und damit zu der Kolonie des Königreichs werden wird. Als der ägyptische Machthaber Ismael Pasha in finanzielle Schwierigkeiten gerät, plant Disraeli im Alleingang, die Aktienmehrheit am Kanal zu übernehmen. Seine politischen Gegner torpedieren den Plan, den eine russische Spionin publik gemacht hat. Die Bank von England verweigert dem Premier den notwendigen Kredit für die Transaktion, so dass dieser sich an den unermesslich reichen jüdischen Bankier Hugh Meyers wenden muss. Um die britische Herrschaft über Indien zu sichern, lässt der Premierminister die Königin Victoria zu Kaiserin von Indien krönen. Auf dem Höhepunkt seiner Macht erweist ihm die Königin die einmalige Ehre, persönlich auf einem Empfang in Downing Street zu erscheinen.
@@ -119,7 +61,7 @@
 
     <div id="sidebar_right">
         <div id="youtube">
-            <iframe id="ytiframe" width="380.25" height="323" ng-src="{{youtube.id}}"></iframe>
+            <iframe id="ytiframe" width="100%" height="auto" ng-src="{{youtube.id}}"></iframe>
 
 
 
@@ -128,40 +70,38 @@
         <br>
         <br>
 
-        <div id="tableMovies">
+        <div id="tableMovies" style="color:white">
             URI: {{movie.uri}} <br>
             Label: <a href="{{movie.uri}}" style="color:red">{{movie.label}}</a> <br>
             Runtime: {{movie.runtime}} <br>
             Publicationdate: {{movie.publicationDate}} <br>
-            Genre: {{movie.genre}}
+            Genre: {{movie.genre}} <br>
         </div>
 
-        <div id="tableSongs">
+        <div id="tableSongs" style="color:white">
             URI: {{song.uri}} <br>
-            Label: <a href="{{song.uri}}" style="color:red">{{movie.label}}</a> <br>
+            Label: <a href="{{song.uri}}" style="color:red">{{song.label}}</a> <br>
             Interpret: {{song.interpretName}} <br>
             Movies: {{song.movies}} <br>
         </div>
 
-        <div id="tableActors">
+        <div id="tableActors" style="color:white">
             URI: {{actor.uri}} <br>
-            Label: <a href="{{actor.uri}}" style="color:red">{{movie.label}}</a> <br>
+            Label: <a href="{{actor.uri}}" style="color:red">{{actor.label}}</a> <br>
             Movies: {{actor.movies}} <br>
         </div>
         <!--<img src="infos.jpg" width="400" height="200">-->
     </div>
 </div>
 
-<div id="footer" style="color:white"><a href="impressum.html">Impressum  |</a><a href="mailto:test@test.de">|  Kontakt</a>
-
-    <a id="myLink" href="#" ng-click="reloadYoutube()">  ||  Reload</a>
+<div id="footer" style="color:white"><a href="impressum.html" style="color:white">Impressum</a>   ||   <a href="mailto:test@test.de" style="color:white">Kontakt</a>   ||   <a id="myLink" style="color:white" href="#" ng-click="reloadYoutube()">Reload</a>
 
 </div>
 
 <script>
-    document.getElementById("tableMovies").style.display = "none";
-    document.getElementById("tableActors").style.display = "none";
-    document.getElementById("tableSongs").style.display = "none";
+    document.getElementById("tableMovies").style.display = "inline";
+    document.getElementById("tableActors").style.display = "inline";
+    document.getElementById("tableSongs").style.display = "inline";
 </script>
 
 </body>

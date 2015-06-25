@@ -15,7 +15,6 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
         }).error(function (data, status) {
             window.alert('Status ' + status + ': ' + data.message);
         });
-        $scope.updateSong();
     };
 
     $scope.loadActorPic = function (name){
@@ -28,14 +27,13 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
     };
 
     $scope.loadSong = function (film) {
-        //var parameter2 = document.getElementById('eingabe').value;
+        //var parameter = document.getElementById('eingabe').value;
 
         $http.get('/api/song?name=' + film).success(function (data) {
             $scope.song = data;
         }).error(function (data, status) {
             window.alert('Status ' + status + ': ' + data.message);
         });
-        $scope.updateActor();
     };
 
     $scope.updateSong = function() {
@@ -50,7 +48,6 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
         }).error(function (data, status) {
             window.alert('Status ' + status + ': ' + data.message);
         });
-        $scope.updateAll().delay(3000);
     };
 
     $scope.updateActor = function() {
@@ -58,34 +55,13 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
     };
 
     $scope.updateAll = function() {
-        if ($scope.movie.uri===null){document.getElementById("tableMovies").style.display = "none";}else{document.getElementById("tableMovies").style.display = "inline";};
+        if ($scope.movie.uri===null || $scope.movie.uri===""){document.getElementById("tableMovies").style.display = "none";}else{document.getElementById("tableMovies").style.display = "inline";};
         if ($scope.actor.uri===null){document.getElementById("tableActors").style.display = "none";}else{document.getElementById("tableActors").style.display = "inline";};
         if ($scope.song.uri===null){document.getElementById("tableSongs").style.display = "none";}else{document.getElementById("tableSongs").style.display = "inline";};
     };
 
-    /* $scope.myFunction = function() {
-     if (movie.uri === null) {
-     document.getElementById("tableMovies").style.display = "none";
-     }
-     if ($scope.actor.uri === null) {
-     document.getElementById("tableActors").style.display = "none";
-     }
-     if (song.uri === null) {
-     document.getElementById("tableSongs").style.display = "none";
-     }
-     };*/
-
     $scope.loadLatestMovies = function () {
-        /*TO DO
-         Infos via crawler Abrufen und Antwortstring generieren.
-         $scope.news="Dummy Element f�r viele tolle Filme";
 
-         $scope.latestMovies = 'default';
-         $http.get('/api/latest').success(function (data) {
-         $scope.latestMovies= data;
-         }).error(function (data, status) {
-         window.alert('Status ' + status + ': ' + data.message);
-         });*/
         $scope.latestMovies="Loading latest movies...";
         $http.get('/api/latest').success(function (data){$scope.latestMovies = data;})
             .error(function (data, status){window.alert('Status '+ status);
@@ -103,10 +79,6 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
         $http.get('/api/youtube?watch=' + parameter).success(function (data){$scope.youtube= data;})
             .error(function (data, status){window.alert('Status '+ status);
             });
-
-        
-
-        //$scope.youtube=$sce.trustAsResourceUrl("http://www.youtube.com/embed/RrcTOKm7zMo?autoplay=1");
 
     };
 
@@ -128,7 +100,21 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
     };
 
 
+    $scope.updateEverything = function(){
+      $scope.loadEverything($scope.film);
+    };
 
+    $scope.loadEverything = function (film) {
+        //var parameter3 = document.getElementById('eingabe').value;
+
+        $http.get('/api/everything?titel=' + film).success(function (data) {
+            $scope.everything = data;
+        }).error(function (data, status) {
+            window.alert('Status ' + status + ': ' + data.message);
+        });
+        $scope.updateAll().delay(3000);
+        $scope.addPersonPic();
+    };
 
 
 
