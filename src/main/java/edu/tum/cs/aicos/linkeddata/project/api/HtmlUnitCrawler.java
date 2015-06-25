@@ -147,7 +147,7 @@ public class HtmlUnitCrawler {
             //generate YoutubeLink
 
             //String youtubelink="https://www.youtube.com/watch?v="+id;
-            String youtubelink="https://www.youtube.com/embed/"+id+"?autoplay=1";
+            String youtubelink="https://www.youtube.com/embed/"+id+"?autoplay=0";
             System.out.println("Returned: "+youtubelink);
             return youtubelink;
         } catch (IOException e) {

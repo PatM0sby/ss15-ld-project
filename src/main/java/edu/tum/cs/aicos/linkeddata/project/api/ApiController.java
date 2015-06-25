@@ -109,7 +109,7 @@ public class ApiController {
     }
 
     @RequestMapping(value = "/song")
-    public Song LoadSong(@RequestParam(value = "name", defaultValue = "Shout!") String name) {
+    public Song LoadSong(@RequestParam(value = "name", defaultValue = "") String name) {
         logger.debug("Loading song from Linkedmdb...");
         String model = "http://data.linkedmdb.org/sparql";
 
@@ -308,7 +308,7 @@ public class ApiController {
     }
 
     @RequestMapping(value = "/personpic")
-    public String LoadActorPic(@RequestParam(value = "name", defaultValue = "default") String name) throws InterruptedException {
+    public String LoadActorPic(@RequestParam(value = "name", defaultValue = "") String name) throws InterruptedException {
         HtmlUnitCrawler crawler = new HtmlUnitCrawler();
         return crawler.getPersonPic(name);
 
