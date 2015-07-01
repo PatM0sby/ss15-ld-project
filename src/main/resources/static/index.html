@@ -46,14 +46,14 @@
     <div id="content">
 
         <div style="overflow:auto">
-        <img src="{{actorpic}}" style="float:left" alt="crawlerpic">
+        <img id="bild"  style="float:left" alt="crawlerpic" ng-src="{{actorpic.id}}">
         <!--<img src="beschreibung.jpg" width="600" height="300">-->
         <h1>{{movie.label}}</h1>
             <h1>{{song.label}}</h1>
             <h1>{{actor.label}}</h1>
         </div>
         <div>
-            Benjamin Disraeli ist Premierminister und steht in Konflikt mit dem liberalen Oppositionsführer William Ewart Gladstone. Beide streiten vor allem darum, welche Politik Großbritannien in Hinblick auf den gerade fertiggestellten Suezkanal einschlagen soll, der von erheblicher Bedeutung für den Seeweg nach Indien und damit zu der Kolonie des Königreichs werden wird. Als der ägyptische Machthaber Ismael Pasha in finanzielle Schwierigkeiten gerät, plant Disraeli im Alleingang, die Aktienmehrheit am Kanal zu übernehmen. Seine politischen Gegner torpedieren den Plan, den eine russische Spionin publik gemacht hat. Die Bank von England verweigert dem Premier den notwendigen Kredit für die Transaktion, so dass dieser sich an den unermesslich reichen jüdischen Bankier Hugh Meyers wenden muss. Um die britische Herrschaft über Indien zu sichern, lässt der Premierminister die Königin Victoria zu Kaiserin von Indien krönen. Auf dem Höhepunkt seiner Macht erweist ihm die Königin die einmalige Ehre, persönlich auf einem Empfang in Downing Street zu erscheinen.
+            {{actorpic.infos}}
         </div>
 
     </div>

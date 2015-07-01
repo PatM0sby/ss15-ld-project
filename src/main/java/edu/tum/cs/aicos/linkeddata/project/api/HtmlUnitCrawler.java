@@ -171,14 +171,34 @@ public class HtmlUnitCrawler {
             HtmlPage page = browser.getPage(query);
             HtmlImage a = (HtmlImage) page.getByXPath("//*[@id=\"mw-content-text\"]/div[1]/div/a/img").get(0);
 
-            return a.getSrcAttribute();
-        } catch (IOException e) {
+            return "https:"+a.getSrcAttribute();
+        } catch (Exception e) {
             e.printStackTrace();
-            return "";
+            return "//speakerslounge.com/static/images/no_img.80eb4243b8d1.jpg";
+
+        }
+    }
+
+    public String getPersonInformation(String name) { //name has to be "Firstname Lastname"
+        System.out.println("Request: " + name);
+
+        name = name.replace(" ", "_");
+        String query = "https://de.wikipedia.org/wiki/" + name;
+        System.out.println("Requesting: " + query);
+        WebClient browser = new WebClient(BrowserVersion.CHROME);
+        browser.getOptions().setThrowExceptionOnScriptError(false);
+        try {
+            HtmlPage page = browser.getPage(query);
+            HtmlParagraph a = (HtmlParagraph) page.getByXPath("//*[@id=\"mw-content-text\"]/p[1]").get(0);
+
+            return a.asText();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "leider keine Infos :(";
+
         }
     }
         //*[@id="item-section-676589"]/li[1]/div/div/div[2]/h3/a
-
     public static void main (String [] args){
 
         HtmlUnitCrawler crawler=new HtmlUnitCrawler();

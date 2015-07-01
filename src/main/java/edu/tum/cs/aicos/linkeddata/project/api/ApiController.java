@@ -308,9 +308,11 @@ public class ApiController {
     }
 
     @RequestMapping(value = "/personpic")
-    public String LoadActorPic(@RequestParam(value = "name", defaultValue = "") String name) throws InterruptedException {
+    public Bild LoadActorPic(@RequestParam(value = "name", defaultValue = "Megan Fox") String name) throws InterruptedException {
         HtmlUnitCrawler crawler = new HtmlUnitCrawler();
-        return crawler.getPersonPic(name);
+        Bild pic=new Bild(crawler.getPersonPic(name));
+        pic.setInfos(crawler.getPersonInformation(name));
+        return pic;
 
     }
 

@@ -1,7 +1,8 @@
 var training = angular.module('training', ['ui.bootstrap']).config(function($sceDelegateProvider) {
     $sceDelegateProvider.resourceUrlWhitelist([
         'self',
-        'https://www.youtube.com/**']);
+        'https://www.youtube.com/**',
+        'upload.wikimedia.org/**']);
 });
 
 training.controller('TrainingController', function ($scope, $http, $compile, $sce) {
@@ -81,24 +82,29 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
             });
 
     };
-
+/*
     $scope.reloadYoutube = function () {
         $scope.addYoutube();
         document.getElementById('ytiframe').location.reload();
     };
-
+*/
     $scope.addYoutube();
 
 
     $scope.addPersonPic = function () {
-        //var parameter = document.getElementById('eingabe').value;
-        var parameter = "Moritz Bleibtreu"
-        $http.get('/api/personpic?name=' + parameter).success(function (data){actorpic= data;})
+        var parameter = document.getElementById('eingabe').value;
+        $http.get('/api/personpic?name=' + parameter).success(function (data){$scope.actorpic= data;})
             .error(function (data, status){window.alert('Status '+ status);
             });
 
     };
-
+/*
+    $scope.reloadPic = function () {
+        $scope.addPersonPic();
+        document.getElementById('bild').location.reload();
+    };
+*/
+    $scope.addPersonPic();
 
     $scope.updateEverything = function(){
       $scope.loadEverything($scope.film);
