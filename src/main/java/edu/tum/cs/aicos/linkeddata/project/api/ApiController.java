@@ -58,8 +58,12 @@ public class ApiController {
                 movie.setUri(x.getURI());
                 Literal a = soln.getLiteral("publicationDate");   // Get a result variable - must be a literal
                 movie.setPublicationDate(a.getString());
-                //Literal b = soln.getLiteral("genre");   // Get a result variable - must be a literal
-                //movie.setGenre(b.getString());
+                try {
+                    Literal b = soln.getLiteral("genre");   // Get a result variable - must be a literal
+                    movie.setGenre(b.getString());
+                }catch (Exception e) {
+                    movie.setGenre("");
+                }
                 Literal c = soln.getLiteral("runtime");   // Get a result variable - must be a literal
                 movie.setRuntime(c.getString());
             }}
@@ -100,7 +104,8 @@ public class ApiController {
                 Resource x = soln.getResource("actor");   // Get a result variable - must be a literal
                 actor.setUri(x.getURI());
                 Literal a = soln.getLiteral("moviename");   // Get a result variable - must be a literal
-                movies.add(LoadMovie(a.getString()));
+                Movie abc=LoadMovie(a.getString());
+                if(abc.getLabel()!="") movies.add(abc);
             }}
         }
         actor.setMovies(movies);
@@ -142,7 +147,8 @@ public class ApiController {
                 Resource x = soln.getResource("song");   // Get a result variable - must be a literal
                 song.setUri(x.getURI());
                 Literal a = soln.getLiteral("moviename");   // Get a result variable - must be a literal
-                movies.add(LoadMovie(a.getString()));
+                Movie abc=LoadMovie(a.getString());
+                if(abc.getLabel()!="") movies.add(abc);
             }}
         }
         song.setMovies(movies);
@@ -267,6 +273,7 @@ public class ApiController {
 
         return everything;
     }
+
 
     @RequestMapping(value = "/latestSelenium")
     public String LoadLatestMoviesSelenium() {

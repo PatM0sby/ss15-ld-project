@@ -82,13 +82,14 @@
             URI: {{song.uri}} <br>
             Label: <a href="{{song.uri}}" style="color:red">{{song.label}}</a> <br>
             Interpret: {{song.interpretName}} <br>
-            Movies: {{song.movies}} <br>
+            Movies: <div ng-repeat="abd in song.movies"> <a href="{{abd.uri}}" style="color:red">{{abd.label}}</a> <br> </div>
         </div>
 
         <div id="tableActors" style="color:white">
             URI: {{actor.uri}} <br>
             Label: <a href="{{actor.uri}}" style="color:red">{{actor.label}}</a> <br>
-            Movies: {{actor.movies}} <br>
+            Movies: <div ng-repeat="abc in actor.movies"> <a href="{{abc.uri}}" style="color:red">{{abc.label}}</a> <br> </div>
+            <br>
         </div>
         <!--<img src="infos.jpg" width="400" height="200">-->
     </div>
