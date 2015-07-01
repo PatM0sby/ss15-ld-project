@@ -2,6 +2,10 @@ package edu.tum.cs.aicos.linkeddata.project.api;
 
 public class Actor {
 
+    public Actor(){
+        label="";
+    }
+
     private String uri;
 
     private String label;

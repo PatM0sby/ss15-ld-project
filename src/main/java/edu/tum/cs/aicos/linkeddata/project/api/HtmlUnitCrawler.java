@@ -12,6 +12,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.w3c.dom.html.HTMLAnchorElement;
+import org.w3c.dom.html.HTMLHtmlElement;
 import org.w3c.dom.html.HTMLImageElement;
 
 
@@ -173,7 +175,7 @@ public class HtmlUnitCrawler {
 
             return "https:"+a.getSrcAttribute();
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             return "//speakerslounge.com/static/images/no_img.80eb4243b8d1.jpg";
 
         }
@@ -193,13 +195,32 @@ public class HtmlUnitCrawler {
 
             return a.asText();
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             return "leider keine Infos :(";
 
         }
     }
-        //*[@id="item-section-676589"]/li[1]/div/div/div[2]/h3/a
-    public static void main (String [] args){
+/*
+    public String getMovieCover(String name) { //name has to be "Firstname Lastname"
+        System.out.println("Request: " + name);
+
+        name = name.replace(" ", "+")+"cover";
+        String query = "http://www.imdb.com/find?ref_=nv_sr_fn&q="+name+"&s=all";
+        System.out.println("Requesting: " + query);
+        WebClient browser = new WebClient(BrowserVersion.CHROME);
+        browser.getOptions().setThrowExceptionOnScriptError(false);
+        try {
+            HtmlPage page = browser.getPage(query);
+            HtmlImage a = (HtmlImage) page.getByXPath("//*[@id=\"rg_s\"]/div[1]/a/img").get(0);
+
+            return a.getSrcAttribute();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            return "leider keine Infos :(";
+
+        }
+    }
+    */    public static void main (String [] args){
 
         HtmlUnitCrawler crawler=new HtmlUnitCrawler();
         crawler.getYoutubeVideo("hunger games");

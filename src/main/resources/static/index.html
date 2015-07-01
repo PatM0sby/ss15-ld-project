@@ -22,7 +22,7 @@
     <img src="logo2.jpg" alt="Logo" height="80px" width="160px" style="float:left">
 
         <div overflow="auto" style="margin-top:1.75%">
-            <input type="text" id="eingabe" ng-model="film" size="150" placeholder="Movies, Songs, Actors.." ng-change="updateMovie();updateSong();updateActor(); addYoutube(); addPersonPic()" list="vorschlag" autocomplete="on"/>
+            <input type="text" id="eingabe" ng-model="film" size="150" placeholder="Movies, Songs, Actors.." on-Enter="updateMovie();updateSong();updateActor();"  list="vorschlag" autocomplete="on"/>
             <datalist id="vorschlag">
                 <option value="Johnny Depp">
                 <option value="Disraeli">
@@ -71,7 +71,6 @@
         <br>
 
         <div id="tableMovies" style="color:white">
-            URI: {{movie.uri}} <br>
             Label: <a href="{{movie.uri}}" style="color:red">{{movie.label}}</a> <br>
             Runtime: {{movie.runtime}} <br>
             Publicationdate: {{movie.publicationDate}} <br>
@@ -79,7 +78,6 @@
         </div>
 
         <div id="tableSongs" style="color:white">
-            URI: {{song.uri}} <br>
             Label: <a href="{{song.uri}}" style="color:red">{{song.label}}</a> <br>
             Interpret: {{song.interpretName}} <br>
             Movies: <div ng-repeat="abd in song.movies"> <a href="{{abd.uri}}" style="color:red">{{abd.label}}</a> <br> </div>
@@ -100,9 +98,9 @@
 </div>
 
 <script>
-    document.getElementById("tableMovies").style.display = "inline";
-    document.getElementById("tableActors").style.display = "inline";
-    document.getElementById("tableSongs").style.display = "inline";
+    document.getElementById("tableMovies").style.display = "none";
+    document.getElementById("tableActors").style.display = "none";
+    document.getElementById("tableSongs").style.display = "none";
 </script>
 
 </body>

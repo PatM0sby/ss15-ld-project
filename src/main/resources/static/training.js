@@ -1,8 +1,7 @@
 var training = angular.module('training', ['ui.bootstrap']).config(function($sceDelegateProvider) {
     $sceDelegateProvider.resourceUrlWhitelist([
         'self',
-        'https://www.youtube.com/**',
-        'upload.wikimedia.org/**']);
+        'https://www.youtube.com/**']);
 });
 
 training.controller('TrainingController', function ($scope, $http, $compile, $sce) {
@@ -13,6 +12,13 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
 
         $http.get('/api/movie?titel=' + film).success(function (data) {
             $scope.movie = data;
+            if($scope.movie.label!=""){
+                document.getElementById("tableMovies").style.display = "inline";
+                $scope.addYoutube($scope.movie.label);
+               //$scope.addMovieCover($scope.movie.label);
+            }else{
+                document.getElementById("tableMovies").style.display = "none";
+            }
         }).error(function (data, status) {
             window.alert('Status ' + status + ': ' + data.message);
         });
@@ -32,6 +38,13 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
 
         $http.get('/api/song?name=' + film).success(function (data) {
             $scope.song = data;
+            if($scope.song.label!=""){
+                document.getElementById("tableSongs").style.display = "inline";
+                $scope.addPersonPic($scope.song.interpretName);
+
+            }else{
+                document.getElementById("tableSongs").style.display = "none";
+            }
         }).error(function (data, status) {
             window.alert('Status ' + status + ': ' + data.message);
         });
@@ -46,6 +59,14 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
 
         $http.get('/api/actor?name=' + film).success(function (data) {
             $scope.actor = data;
+            if($scope.actor.label!=""){
+                document.getElementById("tableActors").style.display = "inline";
+                $scope.addPersonPic($scope.actor.label);
+                $scope.addYoutube($scope.actor.movies.get(0).label);
+
+            }else{
+                document.getElementById("tableActors").style.display = "none";
+            }
         }).error(function (data, status) {
             window.alert('Status ' + status + ': ' + data.message);
         });
@@ -74,10 +95,10 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
     };
     $scope.loadLatestMovies();
 
-    $scope.addYoutube = function () {
-        var parameter = document.getElementById('eingabe').value;
+    $scope.addYoutube = function (eingabe) {
+        //var parameter = document.getElementById('eingabe').value;
 
-        $http.get('/api/youtube?watch=' + parameter).success(function (data){$scope.youtube= data;})
+        $http.get('/api/youtube?watch=' + eingabe).success(function (data){$scope.youtube= data;})
             .error(function (data, status){window.alert('Status '+ status);
             });
 
@@ -88,12 +109,19 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
         document.getElementById('ytiframe').location.reload();
     };
 */
-    $scope.addYoutube();
+    //$scope.addYoutube();
 
 
-    $scope.addPersonPic = function () {
-        var parameter = document.getElementById('eingabe').value;
-        $http.get('/api/personpic?name=' + parameter).success(function (data){$scope.actorpic= data;})
+    $scope.addPersonPic = function (eingabe) {
+
+        $http.get('/api/personpic?name=' + eingabe).success(function (data){$scope.actorpic= data;})
+            .error(function (data, status){window.alert('Status '+ status);
+            });
+
+    };
+    $scope.addMovieCover = function (eingabe) {
+
+        $http.get('/api/moviecover?name=' + eingabe).success(function (data){$scope.actorpic= data;})
             .error(function (data, status){window.alert('Status '+ status);
             });
 
@@ -104,25 +132,26 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
         document.getElementById('bild').location.reload();
     };
 */
-    $scope.addPersonPic();
-
-    $scope.updateEverything = function(){
-      $scope.loadEverything($scope.film);
-    };
-
-    $scope.loadEverything = function (film) {
-        //var parameter3 = document.getElementById('eingabe').value;
-
-        $http.get('/api/everything?titel=' + film).success(function (data) {
-            $scope.everything = data;
-        }).error(function (data, status) {
-            window.alert('Status ' + status + ': ' + data.message);
-        });
-        $scope.updateAll().delay(3000);
-        $scope.addPersonPic();
-    };
+   // $scope.addPersonPic();
 
 
 
         //
+});
+
+training.directive('onEnter', function() {
+    return {
+        scope: {onEnter: '&'},
+        link: function(scope, element) {
+            console.log(scope);
+            element.bind("keydown keypress", function(event) {
+                if(event.which === 13) {
+                    scope.onEnter();
+                    scope.$apply();
+
+                }
+
+            });
+        }
+    }
 });
