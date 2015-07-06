@@ -203,4 +203,28 @@ public class HtmlControllerTest {
         }
     }
 
+    @Test
+    public void einAusBlenden() throws IOException {
+        logger.debug("testeinAusBlenden begin");
+
+        WebDriver browser = new FirefoxDriver();
+        try{
+            browser.get("http://127.0.0.1:" + port + "/");
+
+            browser.findElement(By.id("eingabe")).sendKeys("Emma Watson" + Keys.ENTER);
+            browser.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+            browser.findElement(By.id("tableActors")).isDisplayed();
+
+            browser.findElement(By.id("eingabe")).sendKeys("Harry Potter and the Goblet of Fire" + Keys.ENTER);
+            browser.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+            browser.findElement(By.id("tableMovies")).isDisplayed();
+
+            browser.findElement(By.id("eingabe")).sendKeys("Nobody Does It Better" + Keys.ENTER);
+            browser.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+            browser.findElement(By.id("tableSongs")).isDisplayed();
+        }finally{
+            browser.quit();
+        }
+    }
+
 }
