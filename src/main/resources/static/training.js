@@ -15,7 +15,8 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
             if($scope.movie.label!=""){
                 document.getElementById("tableMovies").style.display = "inline";
                 $scope.addYoutube($scope.movie.label);
-               //$scope.addMovieCover($scope.movie.label);
+
+                //$scope.addMovieCover($scope.movie.label);
             }else{
                 document.getElementById("tableMovies").style.display = "none";
             }
@@ -62,8 +63,9 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
             if($scope.actor.label!=""){
                 document.getElementById("tableActors").style.display = "inline";
                 $scope.addPersonPic($scope.actor.label);
-                $scope.addYoutube($scope.actor.movies.get(0).label);
-
+                if($scope.actor.movies.length!=0) {
+                    $scope.addYoutube($scope.actor.movies[0].label);
+                }
             }else{
                 document.getElementById("tableActors").style.display = "none";
             }
