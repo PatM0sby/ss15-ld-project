@@ -201,7 +201,56 @@ public class HtmlUnitCrawler {
 
         }
     }
+    public String getMovieRatingIMDB(String name) { //name has to be "Firstname Lastname"
+        System.out.println("Request: " + name);
 
+        String name2 = name.replace(" ", "+");
+        String query = "http://www.imdb.com/find?ref_=nv_sr_fn&q="+name2+"&s=all#tt";
+        System.out.println("Requesting: " + query);
+        WebClient browser = new WebClient(BrowserVersion.CHROME);
+        browser.getOptions().setThrowExceptionOnScriptError(false);
+        try {
+
+            HtmlPage landingPage = browser.getPage(query);
+            HtmlElement element=landingPage.getFirstByXPath("//*[@id=\"main\"]/div/div[2]/table/tbody/tr[1]/td[2]/a");
+            String link="http://www.imdb.com"+element.getAttribute("href");
+
+            System.out.println(link);
+            HtmlPage page=browser.getPage(link);
+            HtmlElement div=page.getFirstByXPath("//*[@id=\"overview-top\"]/div[3]/div[1]");
+            String rating=div.getTextContent();
+
+            System.out.println("Rating:"+rating);
+            return rating;
+        } catch (Exception e) {
+            //e.printStackTrace();
+            return "0";
+
+        }
+    }
+
+    public String getMovieRatingTomato(String name) {
+        System.out.println("Request: " + name);
+
+        String name2 = name.replace(" ", "+");
+        String query = "http://www.rottentomatoes.com/search/?search="+name2;
+        System.out.println("Requesting: " + query);
+        WebClient browser = new WebClient(BrowserVersion.CHROME);
+        browser.getOptions().setThrowExceptionOnScriptError(false);
+        try {
+
+            HtmlPage landingPage = browser.getPage(query);
+            HtmlElement element=landingPage.getFirstByXPath("//*[@id=\"movie_results_ul\"]/li[1]/span[1]/span/span[2]");
+            String rating=element.getTextContent();
+
+            System.out.println("Rating:"+rating);
+            return rating;
+        } catch (Exception e) {
+            //e.printStackTrace();
+            return "0";
+
+        }
+    }
     public String getMovieCover(String name) { //name has to be "Firstname Lastname"
         System.out.println("Request: " + name);
 
@@ -233,7 +282,8 @@ public class HtmlUnitCrawler {
        public static void main (String [] args){
 
         HtmlUnitCrawler crawler = new HtmlUnitCrawler();
-           crawler.getMovieCover("jurassic park");
+           //crawler.getMovieRatingIMDB("Sucker Punch");
+           crawler.getMovieRatingTomato("Sucker Punch");
 
     }
 }

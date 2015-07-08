@@ -15,9 +15,9 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
             if($scope.movie.label!=""){
                 document.getElementById("tableMovies").style.display = "inline";
                 $scope.addYoutube($scope.movie.label);
-
-
                 $scope.addMovieCover($scope.movie.label);
+                $scope.addIMDB($scope.movie.label);
+                $scope.addTomato($scope.movie.label);
             }else{
                 document.getElementById("tableMovies").style.display = "none";
             }
@@ -122,9 +122,26 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
             });
 
     };
+
     $scope.addMovieCover = function (eingabe) {
 
         $http.get('/api/moviecover?name=' + eingabe).success(function (data){$scope.actorpic= data;})
+            .error(function (data, status){window.alert('Status '+ status);
+            });
+
+    };
+
+    $scope.addIMDB = function (eingabe) {
+
+        $http.get('/api/imdb?name=' + eingabe).success(function (data){$scope.rating_imdb= data;})
+            .error(function (data, status){window.alert('Status '+ status);
+            });
+
+    };
+
+    $scope.addTomato = function (eingabe) {
+
+        $http.get('/api/tomato?name=' + eingabe).success(function (data){$scope.rating_tomato= data;})
             .error(function (data, status){window.alert('Status '+ status);
             });
 
