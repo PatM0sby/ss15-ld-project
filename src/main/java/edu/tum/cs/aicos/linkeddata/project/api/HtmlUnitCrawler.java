@@ -217,7 +217,7 @@ public class HtmlUnitCrawler {
             String imagelink=a.getSrcAttribute();
             String[] image= imagelink.split("_V1_");
 
-            String result=image[0]+"_V1.jpg";
+            String result=image[0]+"_V1_SX214_AL_.jpg";
 
 
 
