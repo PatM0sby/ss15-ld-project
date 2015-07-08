@@ -1,11 +1,9 @@
 package edu.tum.cs.aicos.linkeddata.project.api;
 
-public class Movie {
-
-    public Movie() {
-        this.label="";
-    }
-
+/**
+ * Created by Daniel on 24.06.2015.
+ */
+public class Everything {
     private String uri;
 
     private String label;
@@ -15,6 +13,10 @@ public class Movie {
     private String publicationDate; // yyyy-mm-dd
 
     private String genre;
+
+    private String interpretName;
+
+    private Movies movies;
 
     public String getUri() {
         return uri;
@@ -52,7 +54,17 @@ public class Movie {
         return genre;
     }
 
-    public void setGenre(String publicationDate) {
-        this.genre = genre;
+    public void setGenre(String publicationDate) {this.genre = genre;}
+
+    public String getInterpretName() { return interpretName;}
+
+    public void setInterpretName(String interpretName) {this.interpretName = interpretName;}
+
+    public Movies getMovies() {
+        return movies;
+    }
+
+    public void setMovies(Movies movies) {
+        this.movies = movies;
     }
 }

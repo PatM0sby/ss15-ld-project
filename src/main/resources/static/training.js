@@ -12,10 +12,18 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
 
         $http.get('/api/movie?titel=' + film).success(function (data) {
             $scope.movie = data;
+            if($scope.movie.label!=""){
+                document.getElementById("tableMovies").style.display = "inline";
+                $scope.addYoutube($scope.movie.label);
+                $scope.addMovieCover($scope.movie.label);
+                $scope.addIMDB($scope.movie.label);
+                $scope.addTomato($scope.movie.label);
+            }else{
+                document.getElementById("tableMovies").style.display = "none";
+            }
         }).error(function (data, status) {
             window.alert('Status ' + status + ': ' + data.message);
         });
-        $scope.updateSong();
     };
 
     $scope.loadActorPic = function (name){
@@ -28,14 +36,20 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
     };
 
     $scope.loadSong = function (film) {
-        //var parameter2 = document.getElementById('eingabe').value;
+        //var parameter = document.getElementById('eingabe').value;
 
         $http.get('/api/song?name=' + film).success(function (data) {
             $scope.song = data;
+            if($scope.song.label!=""){
+                document.getElementById("tableSongs").style.display = "inline";
+                $scope.addPersonPic($scope.song.interpretName);
+
+            }else{
+                document.getElementById("tableSongs").style.display = "none";
+            }
         }).error(function (data, status) {
             window.alert('Status ' + status + ': ' + data.message);
         });
-        $scope.updateActor();
     };
 
     $scope.updateSong = function() {
@@ -47,10 +61,18 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
 
         $http.get('/api/actor?name=' + film).success(function (data) {
             $scope.actor = data;
+            if($scope.actor.label!=""){
+                document.getElementById("tableActors").style.display = "inline";
+                $scope.addPersonPic($scope.actor.label);
+                if($scope.actor.movies.length!=0) {
+                    $scope.addYoutube($scope.actor.movies[0].label);
+                }
+            }else{
+                document.getElementById("tableActors").style.display = "none";
+            }
         }).error(function (data, status) {
             window.alert('Status ' + status + ': ' + data.message);
         });
-        $scope.updateAll().delay(3000);
     };
 
     $scope.updateActor = function() {
@@ -58,34 +80,13 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
     };
 
     $scope.updateAll = function() {
-        if ($scope.movie.uri===null){document.getElementById("tableMovies").style.display = "none";}else{document.getElementById("tableMovies").style.display = "inline";};
+        if ($scope.movie.uri===null || $scope.movie.uri===""){document.getElementById("tableMovies").style.display = "none";}else{document.getElementById("tableMovies").style.display = "inline";};
         if ($scope.actor.uri===null){document.getElementById("tableActors").style.display = "none";}else{document.getElementById("tableActors").style.display = "inline";};
         if ($scope.song.uri===null){document.getElementById("tableSongs").style.display = "none";}else{document.getElementById("tableSongs").style.display = "inline";};
     };
 
-    /* $scope.myFunction = function() {
-     if (movie.uri === null) {
-     document.getElementById("tableMovies").style.display = "none";
-     }
-     if ($scope.actor.uri === null) {
-     document.getElementById("tableActors").style.display = "none";
-     }
-     if (song.uri === null) {
-     document.getElementById("tableSongs").style.display = "none";
-     }
-     };*/
-
     $scope.loadLatestMovies = function () {
-        /*TO DO
-         Infos via crawler Abrufen und Antwortstring generieren.
-         $scope.news="Dummy Element f�r viele tolle Filme";
 
-         $scope.latestMovies = 'default';
-         $http.get('/api/latest').success(function (data) {
-         $scope.latestMovies= data;
-         }).error(function (data, status) {
-         window.alert('Status ' + status + ': ' + data.message);
-         });*/
         $scope.latestMovies="Loading latest movies...";
         $http.get('/api/latest').success(function (data){$scope.latestMovies = data;})
             .error(function (data, status){window.alert('Status '+ status);
@@ -97,40 +98,80 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
     };
     $scope.loadLatestMovies();
 
-    $scope.addYoutube = function () {
-        var parameter = document.getElementById('eingabe').value;
+    $scope.addYoutube = function (eingabe) {
+        //var parameter = document.getElementById('eingabe').value;
 
-        $http.get('/api/youtube?watch=' + parameter).success(function (data){$scope.youtube= data;})
+        $http.get('/api/youtube?watch=' + eingabe).success(function (data){$scope.youtube= data;})
             .error(function (data, status){window.alert('Status '+ status);
             });
 
-        
-
-        //$scope.youtube=$sce.trustAsResourceUrl("http://www.youtube.com/embed/RrcTOKm7zMo?autoplay=1");
-
     };
-
+/*
     $scope.reloadYoutube = function () {
         $scope.addYoutube();
         document.getElementById('ytiframe').location.reload();
     };
+*/
+    //$scope.addYoutube();
 
-    $scope.addYoutube();
 
+    $scope.addPersonPic = function (eingabe) {
 
-    $scope.addPersonPic = function () {
-        //var parameter = document.getElementById('eingabe').value;
-        var parameter = "Moritz Bleibtreu"
-        $http.get('/api/personpic?name=' + parameter).success(function (data){actorpic= data;})
+        $http.get('/api/personpic?name=' + eingabe).success(function (data){$scope.actorpic= data;})
             .error(function (data, status){window.alert('Status '+ status);
             });
 
     };
 
+    $scope.addMovieCover = function (eingabe) {
 
+        $http.get('/api/moviecover?name=' + eingabe).success(function (data){$scope.actorpic= data;})
+            .error(function (data, status){window.alert('Status '+ status);
+            });
 
+    };
+
+    $scope.addIMDB = function (eingabe) {
+
+        $http.get('/api/imdb?name=' + eingabe).success(function (data){$scope.rating_imdb= data;})
+            .error(function (data, status){window.alert('Status '+ status);
+            });
+
+    };
+
+    $scope.addTomato = function (eingabe) {
+
+        $http.get('/api/tomato?name=' + eingabe).success(function (data){$scope.rating_tomato= data;})
+            .error(function (data, status){window.alert('Status '+ status);
+            });
+
+    };
+/*
+    $scope.reloadPic = function () {
+        $scope.addPersonPic();
+        document.getElementById('bild').location.reload();
+    };
+*/
+   // $scope.addPersonPic();
 
 
 
         //
+});
+
+training.directive('onEnter', function() {
+    return {
+        scope: {onEnter: '&'},
+        link: function(scope, element) {
+            console.log(scope);
+            element.bind("keydown keypress", function(event) {
+                if(event.which === 13) {
+                    scope.onEnter();
+                    scope.$apply();
+
+                }
+
+            });
+        }
+    }
 });

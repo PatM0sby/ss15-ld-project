@@ -12,6 +12,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.util.StringUtils;
+import org.w3c.dom.html.HTMLAnchorElement;
+import org.w3c.dom.html.HTMLHtmlElement;
 import org.w3c.dom.html.HTMLImageElement;
 
 
@@ -147,7 +150,7 @@ public class HtmlUnitCrawler {
             //generate YoutubeLink
 
             //String youtubelink="https://www.youtube.com/watch?v="+id;
-            String youtubelink="https://www.youtube.com/embed/"+id+"?autoplay=1";
+            String youtubelink="https://www.youtube.com/embed/"+id+"?autoplay=0";
             System.out.println("Returned: "+youtubelink);
             return youtubelink;
         } catch (IOException e) {
@@ -171,18 +174,118 @@ public class HtmlUnitCrawler {
             HtmlPage page = browser.getPage(query);
             HtmlImage a = (HtmlImage) page.getByXPath("//*[@id=\"mw-content-text\"]/div[1]/div/a/img").get(0);
 
-            return a.getSrcAttribute();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "";
+            return "https:"+a.getSrcAttribute();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            return "//speakerslounge.com/static/images/no_img.80eb4243b8d1.jpg";
+
         }
     }
-        //*[@id="item-section-676589"]/li[1]/div/div/div[2]/h3/a
 
-    public static void main (String [] args){
+    public String getPersonInformation(String name) { //name has to be "Firstname Lastname"
+        System.out.println("Request: " + name);
 
-        HtmlUnitCrawler crawler=new HtmlUnitCrawler();
-        crawler.getYoutubeVideo("hunger games");
+        name = name.replace(" ", "_");
+        String query = "https://de.wikipedia.org/wiki/" + name;
+        System.out.println("Requesting: " + query);
+        WebClient browser = new WebClient(BrowserVersion.CHROME);
+        browser.getOptions().setThrowExceptionOnScriptError(false);
+        try {
+            HtmlPage page = browser.getPage(query);
+            HtmlParagraph a = (HtmlParagraph) page.getByXPath("//*[@id=\"mw-content-text\"]/p[1]").get(0);
+
+            return a.asText();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            return "leider keine Infos :(";
+
+        }
+    }
+    public String getMovieRatingIMDB(String name) {
+        System.out.println("Request: " + name);
+
+        String name2 = name.replace(" ", "+");
+        String query = "https://www.google.de/#q="+name2+"+imdb+rating";
+        System.out.println("Requesting: " + query);
+        WebClient browser = new WebClient(BrowserVersion.CHROME);
+        browser.getOptions().setThrowExceptionOnScriptError(false);
+        try {
+
+            HtmlPage landingPage = browser.getPage(query);
+            HtmlElement element=landingPage.getFirstByXPath("//*[@id=\"rso\"]/li/div/div/div/div/div[1]/cite");
+            System.out.println(element.toString());
+            String link=element.getTextContent();
+
+            System.out.println(link);
+            HtmlPage page=browser.getPage(link);
+            HtmlElement div=page.getFirstByXPath("//*[@id=\"overview-top\"]/div[3]/div[1]");
+            String rating=div.getTextContent()+"/ 10";
+
+            System.out.println("Rating:"+rating);
+            return rating;
+        } catch (Exception e) {
+            //e.printStackTrace();
+            return "0";
+
+        }
+    }
+
+    public String getMovieRatingTomato(String name) {
+        System.out.println("Request: " + name);
+
+        String name2 = name.replace(" ", "+");
+        String query = "http://www.rottentomatoes.com/search/?search="+name2;
+        System.out.println("Requesting: " + query);
+        WebClient browser = new WebClient(BrowserVersion.CHROME);
+        browser.getOptions().setThrowExceptionOnScriptError(false);
+        try {
+
+            HtmlPage landingPage = browser.getPage(query);
+            HtmlElement element=landingPage.getFirstByXPath("//*[@id=\"movie_results_ul\"]/li[1]/span[1]/span/span[2]");
+            String rating=element.getTextContent();
+
+            System.out.println("Rating:"+rating);
+            return rating;
+        } catch (Exception e) {
+            //e.printStackTrace();
+            return "0";
+
+        }
+    }
+    public String getMovieCover(String name) { //name has to be "Firstname Lastname"
+        System.out.println("Request: " + name);
+
+        name = name.replace(" ", "+");
+        String query = "http://www.imdb.com/find?ref_=nv_sr_fn&q="+name+"&s=all#tt";
+        System.out.println("Requesting: " + query);
+        WebClient browser = new WebClient(BrowserVersion.CHROME);
+        browser.getOptions().setThrowExceptionOnScriptError(false);
+        try {
+            HtmlPage page = browser.getPage(query);
+            //HtmlImage a = (HtmlImage) page.getByXPath("//*[@id=\"rg_s\"]/div[1]/a/img").get(0);
+            HtmlImage a = (HtmlImage) page.getByXPath("//*[@id=\"main\"]/div/div[2]/table/tbody/tr[1]/td[1]/a/img").get(0);
+            String imagelink=a.getSrcAttribute();
+            String[] image= imagelink.split("_V1_");
+
+            String result=image[0]+"_V1_SX214_AL_.jpg";
+
+
+
+
+
+            return result;
+        } catch (Exception e) {
+            //e.printStackTrace();
+            return "leider keine Infos :(";
+
+        }
+    }
+       public static void main (String [] args){
+
+        HtmlUnitCrawler crawler = new HtmlUnitCrawler();
+           crawler.getMovieRatingIMDB("Sucker Punch");
+           //crawler.getMovieRatingTomato("Sucker Punch");
+
     }
 }
 

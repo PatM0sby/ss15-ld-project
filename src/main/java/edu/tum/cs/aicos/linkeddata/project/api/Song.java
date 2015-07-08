@@ -2,6 +2,9 @@ package edu.tum.cs.aicos.linkeddata.project.api;
 
 public class Song {
 
+    public Song(){
+        label="";
+    }
     private String uri;
 
     private String label;
