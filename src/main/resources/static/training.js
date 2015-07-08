@@ -16,7 +16,8 @@ training.controller('TrainingController', function ($scope, $http, $compile, $sc
                 document.getElementById("tableMovies").style.display = "inline";
                 $scope.addYoutube($scope.movie.label);
 
-                //$scope.addMovieCover($scope.movie.label);
+
+                $scope.addMovieCover($scope.movie.label);
             }else{
                 document.getElementById("tableMovies").style.display = "none";
             }

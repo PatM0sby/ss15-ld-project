@@ -12,6 +12,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.util.StringUtils;
 import org.w3c.dom.html.HTMLAnchorElement;
 import org.w3c.dom.html.HTMLHtmlElement;
 import org.w3c.dom.html.HTMLImageElement;
@@ -200,30 +201,40 @@ public class HtmlUnitCrawler {
 
         }
     }
-/*
+
     public String getMovieCover(String name) { //name has to be "Firstname Lastname"
         System.out.println("Request: " + name);
 
-        name = name.replace(" ", "+")+"cover";
-        String query = "http://www.imdb.com/find?ref_=nv_sr_fn&q="+name+"&s=all";
+        name = name.replace(" ", "+");
+        String query = "http://www.imdb.com/find?ref_=nv_sr_fn&q="+name+"&s=all#tt";
         System.out.println("Requesting: " + query);
         WebClient browser = new WebClient(BrowserVersion.CHROME);
         browser.getOptions().setThrowExceptionOnScriptError(false);
         try {
             HtmlPage page = browser.getPage(query);
-            HtmlImage a = (HtmlImage) page.getByXPath("//*[@id=\"rg_s\"]/div[1]/a/img").get(0);
+            //HtmlImage a = (HtmlImage) page.getByXPath("//*[@id=\"rg_s\"]/div[1]/a/img").get(0);
+            HtmlImage a = (HtmlImage) page.getByXPath("//*[@id=\"main\"]/div/div[2]/table/tbody/tr[1]/td[1]/a/img").get(0);
+            String imagelink=a.getSrcAttribute();
+            String[] image= imagelink.split("_V1_");
 
-            return a.getSrcAttribute();
+            String result=image[0]+"_V1.jpg";
+
+
+
+
+
+            return result;
         } catch (Exception e) {
             //e.printStackTrace();
             return "leider keine Infos :(";
 
         }
     }
-    */    public static void main (String [] args){
+       public static void main (String [] args){
 
-        HtmlUnitCrawler crawler=new HtmlUnitCrawler();
-        crawler.getYoutubeVideo("hunger games");
+        HtmlUnitCrawler crawler = new HtmlUnitCrawler();
+           crawler.getMovieCover("jurassic park");
+
     }
 }
 

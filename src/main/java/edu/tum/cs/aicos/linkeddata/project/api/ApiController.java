@@ -215,17 +215,16 @@ public class ApiController {
     }
 
     //Todo: MovieCoverCrawlen
-/*
+
     @RequestMapping(value = "/moviecover")
-    public Bild LoadMovieCover(@RequestParam(value = "name", defaultValue = "") String name) throws InterruptedException {
+    public Bild LoadMovieCover(@RequestParam(value = "name", defaultValue = "Sucker Punch") String name) throws InterruptedException {
 
         HtmlUnitCrawler crawler = new HtmlUnitCrawler();
-        String id= crawler.getMovieCover(name);
-        Bild pic=new Bild(id);
+        Bild pic=new Bild(crawler.getMovieCover(name));
 
         return pic;
 
     }
-*/
+
 
 }
