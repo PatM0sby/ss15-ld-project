@@ -227,24 +227,23 @@ public class ApiController {
     }
 
     @RequestMapping(value = "/imdb")
-    public String LoadIMDB(@RequestParam(value = "name", defaultValue = "Sucker Punch") String name) throws InterruptedException {
+    public NewsString LoadIMDB(@RequestParam(value = "name", defaultValue = "Sucker Punch") String name) throws InterruptedException {
 
         HtmlUnitCrawler crawler = new HtmlUnitCrawler();
-        String s = crawler.getMovieRatingIMDB(name);
+        NewsString n = new NewsString();
+        n.setEntries(crawler.getMovieRatingIMDB(name));
 
-        return s;
-
+        return n;
     }
 
     @RequestMapping(value = "/tomato")
-    public String LoadTomato(@RequestParam(value = "name", defaultValue = "Sucker Punch") String name) throws InterruptedException {
+    public NewsString LoadTomato(@RequestParam(value = "name", defaultValue = "Sucker Punch") String name) throws InterruptedException {
 
         HtmlUnitCrawler crawler = new HtmlUnitCrawler();
-        String s = crawler.getMovieRatingTomato(name);
+        NewsString n = new NewsString();
+        n.setEntries(crawler.getMovieRatingTomato(name));
 
-        return s;
-
+        return n;
     }
-
 
 }

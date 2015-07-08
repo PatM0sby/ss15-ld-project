@@ -201,24 +201,25 @@ public class HtmlUnitCrawler {
 
         }
     }
-    public String getMovieRatingIMDB(String name) { //name has to be "Firstname Lastname"
+    public String getMovieRatingIMDB(String name) {
         System.out.println("Request: " + name);
 
         String name2 = name.replace(" ", "+");
-        String query = "http://www.imdb.com/find?ref_=nv_sr_fn&q="+name2+"&s=all#tt";
+        String query = "https://www.google.de/#q="+name2+"+imdb+rating";
         System.out.println("Requesting: " + query);
         WebClient browser = new WebClient(BrowserVersion.CHROME);
         browser.getOptions().setThrowExceptionOnScriptError(false);
         try {
 
             HtmlPage landingPage = browser.getPage(query);
-            HtmlElement element=landingPage.getFirstByXPath("//*[@id=\"main\"]/div/div[2]/table/tbody/tr[1]/td[2]/a");
-            String link="http://www.imdb.com"+element.getAttribute("href");
+            HtmlElement element=landingPage.getFirstByXPath("//*[@id=\"rso\"]/li/div/div/div/div/div[1]/cite");
+            System.out.println(element.toString());
+            String link=element.getTextContent();
 
             System.out.println(link);
             HtmlPage page=browser.getPage(link);
             HtmlElement div=page.getFirstByXPath("//*[@id=\"overview-top\"]/div[3]/div[1]");
-            String rating=div.getTextContent();
+            String rating=div.getTextContent()+"/ 10";
 
             System.out.println("Rating:"+rating);
             return rating;
@@ -282,8 +283,8 @@ public class HtmlUnitCrawler {
        public static void main (String [] args){
 
         HtmlUnitCrawler crawler = new HtmlUnitCrawler();
-           //crawler.getMovieRatingIMDB("Sucker Punch");
-           crawler.getMovieRatingTomato("Sucker Punch");
+           crawler.getMovieRatingIMDB("Sucker Punch");
+           //crawler.getMovieRatingTomato("Sucker Punch");
 
     }
 }
