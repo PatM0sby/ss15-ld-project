@@ -18,6 +18,8 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
@@ -85,6 +87,47 @@ public class ApiControllerTest {
         assertEquals("https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Flickr_-_Siebbi_-_Moritz_Bleibtreu_%281%29.jpg/220px-Flickr_-_Siebbi_-_Moritz_Bleibtreu_%281%29.jpg", data.getId());
 
         logger.debug("Personpic end");
+    }
+    @Test
+     public void testNewsLine() throws Exception {
+        logger.debug("testNewsLineApi begin");
+        RestTemplate browser1 = new TestRestTemplate();
+        ResponseEntity<NewsString> responseEntity = browser1.getForEntity(
+                "http://127.0.0.1:" + port + "/api/latest", NewsString.class);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        NewsString latestMovies = responseEntity.getBody();
+        assertTrue(latestMovies.getEntries().contains("failed") == false);
+
+
+        logger.debug("testNewsLineApi end");
+    }
+
+    @Test
+    public void testMovieCover() throws Exception {
+        logger.debug("testMovieCoverApi begin");
+        RestTemplate browser1 = new TestRestTemplate();
+        ResponseEntity<Bild> responseEntity = browser1.getForEntity(
+                "http://127.0.0.1:" + port + "/api/moviecover?name=The+Matrix", Bild.class);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        Bild img = responseEntity.getBody();
+        assertEquals("http://ia.media-imdb.com/images/M/MV5BMTkxNDYxOTA4M15BMl5BanBnXkFtZTgwNTk0NzQxMTE@._V1_SX214_AL_.jpg", img.getId());
+
+
+
+        logger.debug("testNewsLineApi end");
+
+    }@Test
+     public void testYoutube() throws Exception {
+        logger.debug("testYoutubeApi begin");
+        RestTemplate browser1 = new TestRestTemplate();
+        ResponseEntity<YoutubeVideo> responseEntity = browser1.getForEntity(
+                "http://127.0.0.1:" + port + "/api/youtube?watch=The+Matrix", YoutubeVideo.class);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        YoutubeVideo video = responseEntity.getBody();
+        assertEquals("https://www.youtube.com/embed/m8e-FF8MsqU?autoplay=0",video.getId());
+
+
+        logger.debug("testYoutubeApi end");
     }
 
 }

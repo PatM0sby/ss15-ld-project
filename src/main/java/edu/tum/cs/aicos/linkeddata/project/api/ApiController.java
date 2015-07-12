@@ -214,7 +214,7 @@ public class ApiController {
 
     }
 
-    //Todo: MovieCoverCrawlen
+
 
     @RequestMapping(value = "/moviecover")
     public Bild LoadMovieCover(@RequestParam(value = "name", defaultValue = "Sucker Punch") String name) throws InterruptedException {

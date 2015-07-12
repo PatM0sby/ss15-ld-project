@@ -23,12 +23,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.client.RestTemplate;
 
+import javax.validation.constraints.AssertTrue;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
@@ -139,7 +141,7 @@ public class HtmlControllerTest {
     }
 */
     @Test
-    public void testHtmlUnitCrawler() throws Exception {
+    public void testNewsLine() throws Exception {
         logger.debug("testHtmlUnitCrawler begin");
 
         WebDriver browser = new FirefoxDriver();
@@ -189,7 +191,7 @@ public class HtmlControllerTest {
     }
 
     @Test
-    public void personPic() throws IOException {
+    public void testPersonPic() throws IOException {
         logger.debug("testPersonPic begin");
 
         WebDriver browser = new FirefoxDriver();
@@ -198,10 +200,68 @@ public class HtmlControllerTest {
             browser.findElement(By.id("eingabe")).sendKeys("Emma Watson" + Keys.ENTER);
             browser.manage().timeouts().implicitlyWait(7, TimeUnit.SECONDS);
             WebElement img = browser.findElement(By.id("bild"));
+            logger.debug("testPersonPic end");
         }finally{
             browser.quit();
         }
     }
+    @Test
+    public void testMovieCover() throws IOException {
+        logger.debug("testMovieCover begin");
+
+        WebDriver browser = new FirefoxDriver();
+        try{
+            browser.get("http://127.0.0.1:" + port + "/");
+            browser.findElement(By.id("eingabe")).sendKeys("The Shining" + Keys.ENTER);
+            Thread.sleep(10000);
+            WebElement img = browser.findElement(By.id("bild"));
+            assertTrue(img.getAttribute("src").contains("imdb"));
+            logger.debug("testMovieCover end");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally{
+            browser.quit();
+        }
+    }
+    @Test
+    public void testYoutubeActor() throws IOException {
+        logger.debug("testYoutubeActor begin");
+
+        WebDriver browser = new FirefoxDriver();
+        try{
+            browser.get("http://127.0.0.1:" + port + "/");
+            browser.findElement(By.id("eingabe")).sendKeys("Emma Watson" + Keys.ENTER);
+
+            Thread.sleep(10000); //needed as waiting implicitly might load the yet unchanged default element
+            WebElement player = browser.findElement(By.id("ytiframe"));
+            assertTrue(player.getAttribute("src").contains("youtube"));
+            logger.debug("testYoutubeActor end");
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally{
+            browser.quit();
+        }
+    }
+    @Test
+    public void testYoutubeMovie() throws IOException {
+        logger.debug("testYoutubeMovie begin");
+
+        WebDriver browser = new FirefoxDriver();
+        try{
+            browser.get("http://127.0.0.1:" + port + "/");
+            browser.findElement(By.id("eingabe")).sendKeys("The Shining" + Keys.ENTER);
+            Thread.sleep(10000);
+            WebElement player = browser.findElement(By.id("ytiframe"));
+            assertTrue(player.getAttribute("src").contains("youtube"));
+            logger.debug("testYoutubeMovie end");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally{
+            browser.quit();
+        }
+    }
+
 
     @Test
     public void einAusBlenden() throws IOException {

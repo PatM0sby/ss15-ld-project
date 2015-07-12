@@ -77,7 +77,7 @@ public class HtmlUnitCrawler {
         NewsString newsString=new NewsString();
         newsString.setEntries("failed");
         return newsString;
-        //return "failed";
+
         }
 
 
